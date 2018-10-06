@@ -8,8 +8,7 @@ import android.widget.RemoteViews;
 
 public class MainWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);

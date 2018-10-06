@@ -5,17 +5,20 @@
     android:padding="5dp">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:text="更新"/>
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="8dp"
+        android:text="SSIDの更新"
+        android:textSize="12sp" />
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/updateButton"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
