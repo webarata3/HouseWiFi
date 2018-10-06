@@ -6,6 +6,7 @@ import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainService extends RemoteViewsService {
     @Override
@@ -17,7 +18,7 @@ public class MainService extends RemoteViewsService {
 
         private static final String TAG = "SampleViewFactory";
         private List<String> reservedSsidList;
-        private List<Ssid> ssidList;
+        private Map<String, Ssid> ssidMap;
 
         @Override
         public void onCreate() {
@@ -43,13 +44,14 @@ public class MainService extends RemoteViewsService {
                 return null;
             }
 
-            RemoteViews rv = null;
-
             String ssid = reservedSsidList.get(position);
+            Ssid ssidData = ssidMap.get(ssid);
 
-            rv = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
-            rv.setTextViewText(R.id.text1, ssid);
-            return rv;
+            RemoteViews remoteViews = null;
+            remoteViews = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
+            remoteViews.setTextViewText(R.id.ssid, ssid);
+            remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
+            return remoteViews;
         }
 
         @Override
@@ -79,7 +81,7 @@ public class MainService extends RemoteViewsService {
         }
 
         private void fetchSsid() {
-            ssidList = SsidUtil.getCurrentSsid(getApplicationContext());
+            ssidMap = SsidUtil.getCurrentSsid(getApplicationContext());
         }
     }
 }
