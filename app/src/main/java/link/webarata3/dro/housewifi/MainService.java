@@ -1,6 +1,7 @@
 package link.webarata3.dro.housewifi;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -18,7 +19,8 @@ public class MainService extends RemoteViewsService {
 
         private static final String TAG = "SampleViewFactory";
         private List<String> reservedSsidList;
-        private Map<String, Ssid> ssidMap;
+        private ConnectedWifi connectedWifi;
+        private Map<String, AccessPoint> ssidMap;
 
         @Override
         public void onCreate() {
@@ -45,12 +47,23 @@ public class MainService extends RemoteViewsService {
             }
 
             String ssid = reservedSsidList.get(position);
-            Ssid ssidData = ssidMap.get(ssid);
+            AccessPoint ssidData = ssidMap.get(ssid);
 
             RemoteViews remoteViews = null;
             remoteViews = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
             remoteViews.setTextViewText(R.id.ssid, ssid);
             remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
+
+            if (connectedWifi != null && ssid.equals(connectedWifi.getSsid())) {
+                String other = connectedWifi.getLinkSpeed() + "Mbps";
+                remoteViews.setTextViewText(R.id.linkSpeed, other);
+
+                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.enableAccessPointColor));
+            } else {
+                remoteViews.setTextViewText(R.id.linkSpeed, "");
+                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.disableAccessPointColor));
+            }
+
             return remoteViews;
         }
 
@@ -81,7 +94,8 @@ public class MainService extends RemoteViewsService {
         }
 
         private void fetchSsid() {
-            ssidMap = SsidUtil.getCurrentSsid(getApplicationContext());
+            connectedWifi = WiFiUtil.getConnectedWifi(getApplicationContext());
+            ssidMap = WiFiUtil.getCurrentAccessPoint(getApplicationContext());
         }
     }
 }

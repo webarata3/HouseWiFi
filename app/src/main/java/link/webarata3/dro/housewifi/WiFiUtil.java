@@ -2,6 +2,7 @@ package link.webarata3.dro.housewifi;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import java.util.HashMap;
@@ -11,22 +12,31 @@ import java.util.Objects;
 
 import static android.content.Context.WIFI_SERVICE;
 
-public class SsidUtil {
-    private SsidUtil() {
+public class WiFiUtil {
+    private WiFiUtil() {
         // ignore
     }
 
-    public static Map<String, Ssid> getCurrentSsid(Context context) {
+    public static ConnectedWifi getConnectedWifi(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
+        Objects.requireNonNull(wifiManager);
+
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+        return new ConnectedWifi(wifiInfo.getSSID(), wifiInfo.getIpAddress(), wifiInfo.getLinkSpeed());
+    }
+
+    public static Map<String, AccessPoint> getCurrentAccessPoint(Context context) {
         WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
         Objects.requireNonNull(wifiManager);
         wifiManager.startScan();
 
-        Map<String, Ssid> ssidMap = new HashMap<>();
+        Map<String, AccessPoint> ssidMap = new HashMap<>();
 
         List<ScanResult> scanResults = wifiManager.getScanResults();
 
         for (ScanResult scanResult : scanResults) {
-            Ssid ssid = new Ssid(scanResult.SSID, scanResult.level);
+            AccessPoint ssid = new AccessPoint(scanResult.SSID, scanResult.level);
             ssidMap.put(ssid.getSsid(), ssid);
         }
 
