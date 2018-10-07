@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -19,16 +20,16 @@
             android:id="@+id/linkSpeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="textStart"
-            android:padding="2dp" />
+            android:padding="2dp"
+            android:textAlignment="textStart" />
 
         <TextView
             android:id="@+id/quality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
-            android:padding="2dp" />
-    </LinearLayout>
+            android:padding="2dp"
+            android:textAlignment="textEnd" />
 
+    </LinearLayout>
 
 </LinearLayout>

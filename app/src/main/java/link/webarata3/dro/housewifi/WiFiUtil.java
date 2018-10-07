@@ -2,6 +2,7 @@ package link.webarata3.dro.housewifi;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -41,5 +42,20 @@ public class WiFiUtil {
         }
 
         return ssidMap;
+    }
+
+    public static void changeAccessPoint(Context context, String ssid) {
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
+        Objects.requireNonNull(wifiManager);
+
+        // 先に切断する
+        wifiManager.disconnect();
+
+        for (WifiConfiguration config : wifiManager.getConfiguredNetworks()) {
+            if (config.SSID.replace("\"", "").equals(ssid)) {
+                wifiManager.enableNetwork(config.networkId, true);
+                break;
+            }
+        }
     }
 }

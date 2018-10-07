@@ -1,7 +1,6 @@
 package link.webarata3.dro.housewifi;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -40,9 +39,7 @@ public class MainService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
-            if (reservedSsidList.size() <= 0) {
-                return null;
-            }
+            if (reservedSsidList.size() <= 0) return null;
 
             String ssid = reservedSsidList.get(position);
             AccessPoint ssidData = ssidMap.get(ssid);
@@ -60,6 +57,12 @@ public class MainService extends RemoteViewsService {
                 remoteViews.setTextViewText(R.id.linkSpeed, "");
                 remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.disableAccessPointColor));
             }
+
+            // https://developer.android.com/guide/topics/appwidgets/
+            Intent listIntent = new Intent();
+            listIntent.setAction(MainWidget.ITEM_CLICK_ACTION);
+            listIntent.putExtra("position", position);
+            remoteViews.setOnClickFillInIntent(R.id.container, listIntent);
 
             return remoteViews;
         }
