@@ -1,5 +1,6 @@
 package link.webarata3.dro.housewifi;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -16,8 +17,6 @@ public class MainService extends RemoteViewsService {
     }
 
     private class MainWidgetFactory implements RemoteViewsFactory {
-
-        private static final String TAG = "SampleViewFactory";
         private List<String> reservedSsidList;
         private ConnectedWifi connectedWifi;
         private Map<String, AccessPoint> ssidMap;
@@ -49,8 +48,7 @@ public class MainService extends RemoteViewsService {
             String ssid = reservedSsidList.get(position);
             AccessPoint ssidData = ssidMap.get(ssid);
 
-            RemoteViews remoteViews = null;
-            remoteViews = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
             remoteViews.setTextViewText(R.id.ssid, ssid);
             remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
 
