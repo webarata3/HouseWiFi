@@ -60,7 +60,7 @@ public class MainService extends RemoteViewsService {
 
             // https://developer.android.com/guide/topics/appwidgets/
             Intent listIntent = new Intent();
-            listIntent.setAction(MainWidget.ITEM_CLICK_ACTION);
+            listIntent.setAction(MainWidget.ACTION_ITEM_CLICK);
             listIntent.putExtra("position", position);
             remoteViews.setOnClickFillInIntent(R.id.container, listIntent);
 

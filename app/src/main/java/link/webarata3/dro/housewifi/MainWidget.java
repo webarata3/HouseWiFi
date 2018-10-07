@@ -15,8 +15,8 @@ import android.widget.RemoteViews;
 import java.util.Objects;
 
 public class MainWidget extends AppWidgetProvider {
-    public static final String ITEM_CLICK_ACTION = "link.webarata3.dro.housewifi.ITEM_CLICK_ACTION";
-    private static final String UPDATE_ACTION = "link.webarata3.dro.housewifi.UPDATE_ACTION";
+    public static final String ACTION_ITEM_CLICK = "link.webarata3.dro.housewifi.ACTION_ITEM_CLICK";
+    private static final String ACTION_UPDATE = "link.webarata3.dro.housewifi.ACTION_UPDATE";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -29,7 +29,7 @@ public class MainWidget extends AppWidgetProvider {
 
             // 更新ボタン
             Intent updateButtonIntent = new Intent(context, MainWidget.class);
-            updateButtonIntent.setAction(UPDATE_ACTION);
+            updateButtonIntent.setAction(ACTION_UPDATE);
             PendingIntent updateButtonPendingIntent = PendingIntent.getBroadcast(
                     context, 0, updateButtonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.updateButton, updateButtonPendingIntent);
@@ -56,10 +56,10 @@ public class MainWidget extends AppWidgetProvider {
         Objects.requireNonNull(intent.getAction());
 
         switch (intent.getAction()) {
-            case UPDATE_ACTION:
+            case ACTION_UPDATE:
                 notifyNetworkChanged(context);
                 break;
-            case ITEM_CLICK_ACTION:
+            case ACTION_ITEM_CLICK:
                 WiFiUtil.changeAccessPoint(context, "g_kappa_wifi2f");
             case WifiManager.NETWORK_STATE_CHANGED_ACTION:
                 NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
