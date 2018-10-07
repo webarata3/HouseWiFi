@@ -6,7 +6,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+import android.util.Log;
 import android.widget.RemoteViews;
+
+import java.util.Objects;
 
 public class MainWidget extends AppWidgetProvider {
     public static final String ITEM_CLICK_ACTION = "link.webarata3.dro.housewifi.ITEM_CLICK_ACTION";
@@ -36,6 +42,9 @@ public class MainWidget extends AppWidgetProvider {
                     context, 0, itemClickIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             remoteViews.setPendingIntentTemplate(R.id.listView, itemClickPendingIntent);
 
+            IntentFilter intentFilter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+            context.getApplicationContext().registerReceiver(this, intentFilter);
+
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         }
     }
@@ -44,15 +53,37 @@ public class MainWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
+        Objects.requireNonNull(intent.getAction());
+
         switch (intent.getAction()) {
             case UPDATE_ACTION:
-                AppWidgetManager manager = AppWidgetManager.getInstance(context);
-                ComponentName component = new ComponentName(context, MainWidget.class);
-                manager.notifyAppWidgetViewDataChanged(manager.getAppWidgetIds(component), R.id.listView);
+                notifyNetworkChanged(context);
                 break;
             case ITEM_CLICK_ACTION:
                 WiFiUtil.changeAccessPoint(context, "g_kappa_wifi2f");
+            case WifiManager.NETWORK_STATE_CHANGED_ACTION:
+                NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                switch (info.getState()) {
+                    case CONNECTED:
+                    case DISCONNECTED:
+                        notifyNetworkChanged(context);
+                        break;
+                    case SUSPENDED:
+                        break;
+                    case CONNECTING:
+                        break;
+                    case DISCONNECTING:
+                        break;
+                    case UNKNOWN:
+                        break;
+                }
                 break;
         }
+    }
+
+    private void notifyNetworkChanged(Context context) {
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        ComponentName component = new ComponentName(context, MainWidget.class);
+        manager.notifyAppWidgetViewDataChanged(manager.getAppWidgetIds(component), R.id.listView);
     }
 }
