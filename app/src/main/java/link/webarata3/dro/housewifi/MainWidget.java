@@ -62,6 +62,7 @@ public class MainWidget extends AppWidgetProvider {
                 WiFiUtil.changeAccessPoint(context, "g_kappa_wifi2f");
             case WifiManager.NETWORK_STATE_CHANGED_ACTION:
                 NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                if (info == null) break;
                 switch (info.getState()) {
                     case CONNECTED:
                     case DISCONNECTED:
