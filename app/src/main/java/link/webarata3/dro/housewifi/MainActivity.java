@@ -1,6 +1,7 @@
 package link.webarata3.dro.housewifi;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
@@ -8,6 +9,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
@@ -55,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
             checkPermission();
         });
 
+        findViewById(R.id.button3).setOnClickListener(view -> {
+            Intent localIntent = new Intent(MainWidget.ACTION_CHANGE_LIST);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+        });
 
         SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
         boolean firstAccesss = preferences.getBoolean("firstAccess", true);
