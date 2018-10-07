@@ -1,6 +1,5 @@
 package link.webarata3.dro.housewifi;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
