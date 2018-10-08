@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.Objects;
