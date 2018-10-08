@@ -3,6 +3,7 @@ package link.webarata3.dro.housewifi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +18,8 @@ import java.util.Objects;
 
 public class MainWidget extends AppWidgetProvider {
     public static final String ACTION_ITEM_CLICK = "link.webarata3.dro.housewifi.ACTION_ITEM_CLICK";
-    private static final String ACTION_UPDATE = "link.webarata3.dro.housewifi.ACTION_UPDATE";
-
     public static final String ACTION_CHANGE_LIST = "link.webarata3.dro.housewifi.ACTION_CHANGE_LIST";
+    private static final String ACTION_UPDATE = "link.webarata3.dro.housewifi.ACTION_UPDATE";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -45,11 +45,39 @@ public class MainWidget extends AppWidgetProvider {
                     context, 0, itemClickIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             remoteViews.setPendingIntentTemplate(R.id.listView, itemClickPendingIntent);
 
+            // Wi-Fiの変更
             IntentFilter intentFilter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            context.getApplicationContext().registerReceiver(this, intentFilter);
+            context.getApplicationContext().registerReceiver(
+                    new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                            if (info == null) return;
+                            switch (info.getState()) {
+                                case CONNECTED:
+                                case DISCONNECTED:
+                                    notifyNetworkChanged(context);
+                                    break;
+                                case SUSPENDED:
+                                    break;
+                                case CONNECTING:
+                                    break;
+                                case DISCONNECTING:
+                                    break;
+                                case UNKNOWN:
+                                    break;
+
+                            }
+                        }
+                    }, intentFilter);
 
             IntentFilter myIntentFilter = new IntentFilter(ACTION_CHANGE_LIST);
-            LocalBroadcastManager.getInstance(context).registerReceiver(this, myIntentFilter);
+            LocalBroadcastManager.getInstance(context).registerReceiver(
+                    new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                        }
+                    }, myIntentFilter);
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         }
@@ -61,30 +89,12 @@ public class MainWidget extends AppWidgetProvider {
 
         Objects.requireNonNull(intent.getAction());
 
-        Log.d("############", intent.getAction());
         switch (intent.getAction()) {
             case ACTION_UPDATE:
                 notifyNetworkChanged(context);
                 break;
             case ACTION_ITEM_CLICK:
                 WiFiUtil.changeAccessPoint(context, "g_kappa_wifi2f");
-            case WifiManager.NETWORK_STATE_CHANGED_ACTION:
-                NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-                if (info == null) break;
-                switch (info.getState()) {
-                    case CONNECTED:
-                    case DISCONNECTED:
-                        notifyNetworkChanged(context);
-                        break;
-                    case SUSPENDED:
-                        break;
-                    case CONNECTING:
-                        break;
-                    case DISCONNECTING:
-                        break;
-                    case UNKNOWN:
-                        break;
-                }
                 break;
         }
     }
