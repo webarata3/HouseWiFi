@@ -65,7 +65,6 @@ public class MainWidget extends AppWidgetProvider {
                                     break;
                                 case UNKNOWN:
                                     break;
-
                             }
                         }
                     }, intentFilter);
