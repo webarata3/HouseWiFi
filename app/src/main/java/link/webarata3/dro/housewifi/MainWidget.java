@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.Objects;
@@ -19,6 +20,12 @@ public class MainWidget extends AppWidgetProvider {
     public static final String ACTION_ITEM_CLICK = "link.webarata3.dro.housewifi.ACTION_ITEM_CLICK";
     public static final String ACTION_CHANGE_LIST = "link.webarata3.dro.housewifi.ACTION_CHANGE_LIST";
     private static final String ACTION_UPDATE = "link.webarata3.dro.housewifi.ACTION_UPDATE";
+
+    public static void sendRefreshBroadcast(Context context) {
+        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.setComponent(new ComponentName(context, MainWidget.class));
+        context.sendBroadcast(intent);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -69,14 +76,6 @@ public class MainWidget extends AppWidgetProvider {
                         }
                     }, intentFilter);
 
-            IntentFilter myIntentFilter = new IntentFilter(ACTION_CHANGE_LIST);
-            LocalBroadcastManager.getInstance(context).registerReceiver(
-                    new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-                        }
-                    }, myIntentFilter);
-
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         }
     }
@@ -92,7 +91,8 @@ public class MainWidget extends AppWidgetProvider {
                 notifyNetworkChanged(context);
                 break;
             case ACTION_ITEM_CLICK:
-                WiFiUtil.changeAccessPoint(context, "g_kappa_wifi2f");
+                String ssid = intent.getExtras().getString("ssid");
+                WiFiUtil.changeAccessPoint(context, ssid);
                 break;
         }
     }

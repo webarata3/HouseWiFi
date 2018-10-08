@@ -1,6 +1,8 @@
 package link.webarata3.dro.housewifi;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -22,10 +24,6 @@ public class MainService extends RemoteViewsService {
         @Override
         public void onCreate() {
             reservedSsidList = new ArrayList<>();
-            reservedSsidList.add("a_kappa_wifi2");
-            reservedSsidList.add("g_kappa_wifi2");
-            reservedSsidList.add("a_kappa_wifi2f");
-            reservedSsidList.add("g_kappa_wifi2f");
         }
 
         @Override
@@ -61,7 +59,7 @@ public class MainService extends RemoteViewsService {
             // https://developer.android.com/guide/topics/appwidgets/
             Intent listIntent = new Intent();
             listIntent.setAction(MainWidget.ACTION_ITEM_CLICK);
-            listIntent.putExtra("position", position);
+            listIntent.putExtra("ssid", reservedSsidList.get(position));
             remoteViews.setOnClickFillInIntent(R.id.container, listIntent);
 
             return remoteViews;
@@ -96,6 +94,20 @@ public class MainService extends RemoteViewsService {
         private void fetchSsid() {
             connectedWifi = WiFiUtil.getConnectedWifi(getApplicationContext());
             ssidMap = WiFiUtil.getCurrentAccessPoint(getApplicationContext());
+
+            reservedSsidList = new ArrayList<>();
+            DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
+            try (SQLiteDatabase db = helper.getWritableDatabase()) {
+                String sql = "SELECT * FROM ssid";
+                try (Cursor cursor = db.rawQuery(sql, null)) {
+                    String result = "";
+                    while (cursor.moveToNext()) {
+                        String ssid = cursor.getString(cursor.getColumnIndex("ssid"));
+                        reservedSsidList.add(ssid);
+                    }
+                }
+            }
+
         }
     }
 }
