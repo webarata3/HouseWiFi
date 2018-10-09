@@ -17,7 +17,7 @@ public class MainService extends RemoteViewsService {
     }
 
     private class MainWidgetFactory implements RemoteViewsFactory {
-        private List<String> reservedSsidList;
+        private List<Ssid> reservedSsidList;
         private ConnectedWifi connectedWifi;
         private Map<String, AccessPoint> ssidMap;
 
@@ -39,7 +39,7 @@ public class MainService extends RemoteViewsService {
         public RemoteViews getViewAt(int position) {
             if (reservedSsidList.size() <= 0) return null;
 
-            String ssid = reservedSsidList.get(position);
+            String ssid = reservedSsidList.get(position).getSsid();
             AccessPoint ssidData = ssidMap.get(ssid);
 
             RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
@@ -59,7 +59,7 @@ public class MainService extends RemoteViewsService {
             // https://developer.android.com/guide/topics/appwidgets/
             Intent listIntent = new Intent();
             listIntent.setAction(MainWidget.ACTION_ITEM_CLICK);
-            listIntent.putExtra("ssid", reservedSsidList.get(position));
+            listIntent.putExtra("ssid", ssid);
             remoteViews.setOnClickFillInIntent(R.id.container, listIntent);
 
             return remoteViews;
@@ -97,16 +97,8 @@ public class MainService extends RemoteViewsService {
 
             reservedSsidList = new ArrayList<>();
             DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
-            try (SQLiteDatabase db = helper.getWritableDatabase()) {
-                String sql = "SELECT * FROM ssid";
-                try (Cursor cursor = db.rawQuery(sql, null)) {
-                    String result = "";
-                    while (cursor.moveToNext()) {
-                        String ssid = cursor.getString(cursor.getColumnIndex("ssid"));
-                        reservedSsidList.add(ssid);
-                    }
-                }
-            }
+            SsidDao ssidDao = new SsidDao(helper.getReadableDatabase());
+            reservedSsidList = ssidDao.selectAll();
         }
     }
 }
