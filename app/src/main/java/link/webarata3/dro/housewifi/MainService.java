@@ -107,7 +107,6 @@ public class MainService extends RemoteViewsService {
                     }
                 }
             }
-
         }
     }
 }
