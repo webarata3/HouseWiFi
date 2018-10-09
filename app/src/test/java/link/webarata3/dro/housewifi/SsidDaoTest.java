@@ -28,9 +28,11 @@ public class SsidDaoTest {
 
     @Test
     public void test2() {
+        final String TEST_DATA = "wifi_access_point";
+
         SsidDao ssidDao = new SsidDao(dbHelper.getReadableDatabase());
         Ssid ssid = new Ssid();
-        ssid.setSsid("testtest");
+        ssid.setSsid(TEST_DATA);
         ssidDao.insert(ssid);
 
         List<Ssid> ssidList = ssidDao.selectAll();
@@ -38,7 +40,7 @@ public class SsidDaoTest {
 
         Ssid resultSsid = ssidList.get(0);
         assertThat(resultSsid, is(notNullValue()));
-        assertThat(resultSsid.getSsid(), is("testtest"));
+        assertThat(resultSsid.getSsid(), is(TEST_DATA));
     }
 
     @Test
