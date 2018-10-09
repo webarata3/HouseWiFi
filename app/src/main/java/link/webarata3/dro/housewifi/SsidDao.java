@@ -2,6 +2,7 @@ package link.webarata3.dro.housewifi;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,14 @@ public class SsidDao {
 
     public SsidDao(SQLiteDatabase db) {
         this.db = db;
+    }
+
+    public void insert(Ssid ssid) {
+        String INSERT_SQL = "INSERT INTO ssid(ssid) VALUES(?)";
+
+        SQLiteStatement stmt = db.compileStatement(INSERT_SQL);
+        stmt.bindString(1, ssid.getSsid());
+        stmt.executeInsert();
     }
 
     private Ssid selectOne(Cursor cursor) {

@@ -20,6 +20,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
     // http://java-lang-programming.com/ja/lints/1
     lintOptions {
         disable 'GoogleAppIndexingWarning'
@@ -31,4 +36,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation  'org.hamcrest:hamcrest-all:1.3'
+    testImplementation "org.robolectric:robolectric:4.0-beta-1"
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta01'
+    androidTestImplementation 'androidx.test:rules:1.1.0-beta01'
 }
