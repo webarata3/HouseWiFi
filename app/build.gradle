@@ -50,7 +50,7 @@ dependencies {
 // task test
 // レポート app/build/test-results/testDebugUnitTest/*.xml
 
-/ JaCoCo
+// JaCoCo
 // task testDebugUnitTest jacocoTestReport
 apply plugin: 'jacoco'
 
