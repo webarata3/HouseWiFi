@@ -43,3 +43,32 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-beta01'
     androidTestImplementation 'androidx.test:rules:1.1.0-beta01'
 }
+
+//########## その他設定
+
+// JUnit
+// task test
+// レポート app/build/test-results/testDebugUnitTest/*.xml
+
+/ JaCoCo
+// task testDebugUnitTest jacocoTestReport
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+}
