@@ -20,7 +20,6 @@ import link.webarata3.dro.housewifi.util.WiFiUtil;
 
 public class MainWidget extends AppWidgetProvider {
     public static final String ACTION_ITEM_CLICK = "link.webarata3.dro.housewifi.ACTION_ITEM_CLICK";
-    public static final String ACTION_CHANGE_LIST = "link.webarata3.dro.housewifi.ACTION_CHANGE_LIST";
     private static final String ACTION_UPDATE = "link.webarata3.dro.housewifi.ACTION_UPDATE";
 
     public static void sendRefreshBroadcast(Context context) {
