@@ -9,6 +9,10 @@ import org.robolectric.RuntimeEnvironment;
 
 import java.util.List;
 
+import link.webarata3.dro.housewifi.dao.SsidDao;
+import link.webarata3.dro.housewifi.helper.DatabaseHelper;
+import link.webarata3.dro.housewifi.model.Ssid;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 

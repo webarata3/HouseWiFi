@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.util;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import link.webarata3.dro.housewifi.model.AccessPoint;
+import link.webarata3.dro.housewifi.model.ConnectedWifi;
 
 import static android.content.Context.WIFI_SERVICE;
 

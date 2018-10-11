@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

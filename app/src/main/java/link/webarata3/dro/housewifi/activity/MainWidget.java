@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.activity;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -13,6 +13,10 @@ import android.net.wifi.WifiManager;
 import android.widget.RemoteViews;
 
 import java.util.Objects;
+
+import link.webarata3.dro.housewifi.service.MainService;
+import link.webarata3.dro.housewifi.R;
+import link.webarata3.dro.housewifi.util.WiFiUtil;
 
 public class MainWidget extends AppWidgetProvider {
     public static final String ACTION_ITEM_CLICK = "link.webarata3.dro.housewifi.ACTION_ITEM_CLICK";

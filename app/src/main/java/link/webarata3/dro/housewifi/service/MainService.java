@@ -1,14 +1,21 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.service;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import link.webarata3.dro.housewifi.R;
+import link.webarata3.dro.housewifi.activity.MainWidget;
+import link.webarata3.dro.housewifi.dao.SsidDao;
+import link.webarata3.dro.housewifi.helper.DatabaseHelper;
+import link.webarata3.dro.housewifi.model.AccessPoint;
+import link.webarata3.dro.housewifi.model.ConnectedWifi;
+import link.webarata3.dro.housewifi.model.Ssid;
+import link.webarata3.dro.housewifi.util.WiFiUtil;
 
 public class MainService extends RemoteViewsService {
     @Override

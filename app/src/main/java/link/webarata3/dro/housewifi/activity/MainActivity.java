@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.activity;
 
 import android.Manifest;
 import android.content.SharedPreferences;
@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import link.webarata3.dro.housewifi.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override

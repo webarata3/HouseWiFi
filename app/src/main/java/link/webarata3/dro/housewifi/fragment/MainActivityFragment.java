@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.fragment;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.model.HouseWiFiiModel;
 
 public class MainActivityFragment extends Fragment {

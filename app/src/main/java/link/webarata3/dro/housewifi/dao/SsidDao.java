@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import link.webarata3.dro.housewifi.model.Ssid;
 
 public class SsidDao {
     private SQLiteDatabase db;
