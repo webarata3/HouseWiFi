@@ -69,6 +69,8 @@ task jacocoTestReport(type: JacocoReport) {
         html.enabled = true
     }
 
+    // Jenkinsは、シングルクォートが不要
+    // **/R.class, **/R$*.class, **/BuildConfig.*, **/Manifest*.*, **/*Test*.*,  android/**/*.*, androidx/**/*.*
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*',
                       'android/**/*.*', 'androidx/**/*.*']
     def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug/", excludes: fileFilter)
