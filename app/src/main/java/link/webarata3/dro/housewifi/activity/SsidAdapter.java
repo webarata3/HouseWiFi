@@ -43,10 +43,23 @@ public class SsidAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = layoutInflater.inflate(R.layout.ssid_listview_row, parent, false);
+        ViewHolder viewHolder;
 
-        ((TextView) convertView.findViewById(R.id.ssidTextView)).setText(ssidList.get(position).getSsid());
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.ssid_listview_row, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.ssidView = convertView.findViewById(R.id.ssidTextView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        viewHolder.ssidView.setText(ssidList.get(position).getSsid());
 
         return convertView;
+    }
+
+    private static class ViewHolder {
+        TextView ssidView;
     }
 }

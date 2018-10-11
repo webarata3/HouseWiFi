@@ -1,5 +1,7 @@
 package link.webarata3.dro.housewifi.model;
 
+import java.util.List;
+
 public class HouseWiFiiModel {
     private static HouseWiFiiModel model;
 
@@ -17,6 +19,7 @@ public class HouseWiFiiModel {
 
     private boolean firstAccess;
     private boolean acceptPermission;
+    private List<Ssid> ssidList;
 
     public boolean isFirstAccess() {
         return firstAccess;
@@ -32,5 +35,13 @@ public class HouseWiFiiModel {
 
     public void setAcceptPermission(boolean acceptPermission) {
         this.acceptPermission = acceptPermission;
+    }
+
+    public List<Ssid> getSsidList() {
+        return ssidList;
+    }
+
+    public void setSsidList(List<Ssid> ssidList) {
+        this.ssidList = ssidList;
     }
 }

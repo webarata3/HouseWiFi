@@ -90,12 +90,12 @@ public class MainActivityFragment extends Fragment {
         DatabaseHelper helper = new DatabaseHelper(getActivity());
         helper.executeQuery(db -> {
             SsidDao ssidDao = new SsidDao(db);
-            List<Ssid> ssidList = ssidDao.selectAll();
+            model.setSsidList(ssidDao.selectAll());
 
             AppExecutors.getInstance().mainThread().execute(() -> {
                 Activity activity = Objects.requireNonNull(getActivity());
                 SsidAdapter ssidAdapter = new SsidAdapter(activity);
-                ssidAdapter.setSsidList(ssidList);
+                ssidAdapter.setSsidList(model.getSsidList());
                 listView.setAdapter(ssidAdapter);
             });
         });
