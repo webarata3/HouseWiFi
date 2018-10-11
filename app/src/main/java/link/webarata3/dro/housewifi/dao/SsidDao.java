@@ -26,6 +26,7 @@ public class SsidDao {
 
     private Ssid selectOne(Cursor cursor) {
         Ssid ssid = new Ssid();
+        ssid.setId(cursor.getInt(cursor.getColumnIndex("id")));
         ssid.setSsid(cursor.getString(cursor.getColumnIndex("ssid")));
 
         return ssid;
@@ -33,7 +34,7 @@ public class SsidDao {
 
     public List<Ssid> selectAll() {
         List<Ssid> ssidList = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery("SELECT ssid FROM ssid", null)) {
+        try (Cursor cursor = db.rawQuery("SELECT id, ssid FROM ssid", null)) {
             while (cursor.moveToNext()) {
                 Ssid ssid = selectOne(cursor);
                 ssidList.add(ssid);

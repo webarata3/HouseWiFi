@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import link.webarata3.dro.housewifi.AppExecutors;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ssid.db";
 
@@ -25,5 +27,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    public void executeInTransaction(CallbackSql callbackSql) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        AppExecutors.getInstance().diskIo().execute(() -> {
+            db.beginTransaction();
+            try {
+                callbackSql.execute(db);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        });
+    }
+
+    public void executeQuery(CallbackSql callbackSql) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        AppExecutors.getInstance().diskIo().execute(() -> {
+            callbackSql.execute(db);
+        });
     }
 }
