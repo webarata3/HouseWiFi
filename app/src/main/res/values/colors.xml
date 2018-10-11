@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="enableAccessPointColor">#ff0000</color>
-    <color name="disableAccessPointColor">#000000</color>
+    <color name="colorWidgetBackground">#ffffff</color>
+    <color name="colorEnableAccessPoint">#ff0000</color>
+    <color name="colorDisableAccessPoint">#000000</color>
 </resources>

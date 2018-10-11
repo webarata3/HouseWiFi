@@ -50,10 +50,10 @@ public class MainService extends RemoteViewsService {
                 String other = connectedWifi.getLinkSpeed() + "Mbps";
                 remoteViews.setTextViewText(R.id.linkSpeed, other);
 
-                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.enableAccessPointColor));
+                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.colorEnableAccessPoint));
             } else {
                 remoteViews.setTextViewText(R.id.linkSpeed, "");
-                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.disableAccessPointColor));
+                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.colorDisableAccessPoint));
             }
 
             // https://developer.android.com/guide/topics/appwidgets/

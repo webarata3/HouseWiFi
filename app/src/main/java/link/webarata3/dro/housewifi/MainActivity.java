@@ -16,8 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
-    private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +31,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
-        boolean firstAccesss = preferences.getBoolean("firstAccess", true);
-
-        if (firstAccesss) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstAccess", false);
-            editor.apply();
-
-            checkPermission();
-        }
     }
 
     @Override
@@ -66,31 +53,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void checkPermission() {
-        // versionは6.0以上なので、バージョンチェックは不要
-        // if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-        // 既に許可されているか確認
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // 許可されていなかったらリクエストする
-            // ダイアログが表示される
-            requestPermissions(
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        } else {
-            // 許可されなかった場合
-            // 何らかの対処が必要
-        }
     }
 }
