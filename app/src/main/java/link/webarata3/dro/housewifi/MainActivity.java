@@ -3,61 +3,35 @@ package link.webarata3.dro.housewifi;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
-import java.util.List;
-import java.util.Objects;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
     private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
-
-    private TextView tv;
-    private Button button;
-    private Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        tv = findViewById(R.id.ssid);
-
-        button = findViewById(R.id.button);
-        button.setEnabled(false);
-        button.setOnClickListener(view -> {
-            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-            Objects.requireNonNull(wifiManager);
-            wifiManager.startScan();
-
-            List<ScanResult> scanResults = wifiManager.getScanResults();
-            String str = "";
-            for (ScanResult scanResult : scanResults) {
-                double hinshitsu = 2.0 * (scanResult.level + 100.0);
-                hinshitsu = hinshitsu >= 100.0 ? 100.0 : hinshitsu;
-                str = str + scanResult.SSID + " " + scanResult.level + "\n" + hinshitsu + "\n";
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            str = str + "===================\n";
-            str = str + wifiInfo.getSSID() + " " + wifiInfo.getIpAddress() + " " + " " + wifiInfo.getLinkSpeed();
-            tv.setText(str);
-        });
-
-        button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(view -> {
-            checkPermission();
-        });
-
-        findViewById(R.id.button3).setOnClickListener(view -> {
-            MainWidget.sendRefreshBroadcast(this);
         });
 
         SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
@@ -72,6 +46,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void checkPermission() {
         // versionは6.0以上なので、バージョンチェックは不要
         // if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
@@ -83,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION);
-        } else {
-            button.setEnabled(true);
         }
     }
 
@@ -94,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            button.setEnabled(true);
         } else {
             // 許可されなかった場合
             // 何らかの対処が必要

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">HouseWiFi</string>
     <string name="update_ssid">SSIDの更新</string>
+    <string name="action_settings">Settings</string>
 </resources>
