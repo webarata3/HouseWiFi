@@ -2,16 +2,16 @@ package link.webarata3.dro.housewifi.model;
 
 import java.util.List;
 
-public class HouseWiFiiModel {
-    private static HouseWiFiiModel model;
+public class HouseWiFiModel {
+    private static HouseWiFiModel model;
 
-    private HouseWiFiiModel() {
+    private HouseWiFiModel() {
         // ignore
     }
 
-    public static synchronized HouseWiFiiModel getInstance() {
+    public static synchronized HouseWiFiModel getInstance() {
         if (model == null) {
-            model = new HouseWiFiiModel();
+            model = new HouseWiFiModel();
         }
 
         return model;

@@ -19,12 +19,12 @@ import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.SsidAdapter;
 import link.webarata3.dro.housewifi.dao.SsidDao;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
-import link.webarata3.dro.housewifi.model.HouseWiFiiModel;
+import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 
 public class MainActivityFragment extends Fragment {
     private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
 
-    private HouseWiFiiModel model;
+    private HouseWiFiModel model;
     private ListView listView;
 
     public MainActivityFragment() {
@@ -38,7 +38,7 @@ public class MainActivityFragment extends Fragment {
         listView = view.findViewById(R.id.listView);
         readSsidList(listView);
 
-        model = HouseWiFiiModel.getInstance();
+        model = HouseWiFiModel.getInstance();
 
         Activity activity = Objects.requireNonNull(getActivity());
         SharedPreferences preferences = activity.getSharedPreferences("settings",
