@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import java.util.Objects;
@@ -92,7 +93,8 @@ public class MainWidget extends AppWidgetProvider {
                 notifyNetworkChanged(context);
                 break;
             case ACTION_ITEM_CLICK:
-                String ssid = intent.getExtras().getString("ssid");
+                Bundle bundle = Objects.requireNonNull(intent.getExtras());
+                String ssid = bundle.getString("ssid");
                 WiFiUtil.changeAccessPoint(context, ssid);
                 break;
         }
