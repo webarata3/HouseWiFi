@@ -9,14 +9,14 @@ import org.robolectric.RuntimeEnvironment;
 
 import java.util.List;
 
-import link.webarata3.dro.housewifi.dao.SsidDao;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.Ssid;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class SsidDaoTest {
     DatabaseHelper dbHelper;
 
