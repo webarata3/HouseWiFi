@@ -1,7 +1,5 @@
 package link.webarata3.dro.housewifi.model;
 
-import android.util.Log;
-
 public class ConnectedWifi {
     private String ssid;
     private String ipAddress;
@@ -9,7 +7,7 @@ public class ConnectedWifi {
 
     public ConnectedWifi(String ssid, int ipAddress, int linkSpeed) {
         this.ssid = ssid.replace("\"", "");
-        this.ipAddress = (ipAddress  & 0xFF) + "."
+        this.ipAddress = (ipAddress & 0xFF) + "."
                 + ((ipAddress >> 8) & 0xFF) + "."
                 + ((ipAddress >> 16) & 0xFF) + "."
                 + ((ipAddress >> 24) & 0xFF);

@@ -68,7 +68,6 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void requestPermission() {
-        Activity activity = Objects.requireNonNull(getActivity());
         requestPermissions(
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                 PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION);

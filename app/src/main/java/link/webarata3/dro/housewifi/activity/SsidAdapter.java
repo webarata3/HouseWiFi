@@ -14,7 +14,7 @@ import link.webarata3.dro.housewifi.model.Ssid;
 
 public class SsidAdapter extends BaseAdapter {
     private Context context;
-    private LayoutInflater layoutInflater = null;
+    private LayoutInflater layoutInflater;
     private List<Ssid> ssidList;
 
     public SsidAdapter(Context context) {
