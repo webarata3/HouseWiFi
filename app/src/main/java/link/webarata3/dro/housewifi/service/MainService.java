@@ -54,7 +54,7 @@ public class MainService extends RemoteViewsService {
             remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
 
             if (connectedWifi != null && ssid.equals(connectedWifi.getSsid())) {
-                String other = connectedWifi.getLinkSpeed() + "Mbps";
+                String other = getString(R.string.link_speed, connectedWifi.getLinkSpeed());
                 remoteViews.setTextViewText(R.id.linkSpeed, other);
 
                 remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.colorEnableAccessPoint));
