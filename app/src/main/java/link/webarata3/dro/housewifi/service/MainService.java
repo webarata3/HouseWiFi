@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import androidx.core.content.ContextCompat;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.MainWidget;
 import link.webarata3.dro.housewifi.dao.SsidDao;
@@ -57,10 +58,12 @@ public class MainService extends RemoteViewsService {
                 String other = getString(R.string.link_speed, connectedWifi.getLinkSpeed());
                 remoteViews.setTextViewText(R.id.linkSpeed, other);
 
-                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.colorEnableAccessPoint));
+                remoteViews.setTextColor(R.id.ssid,
+                        ContextCompat.getColor(getApplication(), R.color.colorEnableAccessPoint));
             } else {
                 remoteViews.setTextViewText(R.id.linkSpeed, "");
-                remoteViews.setTextColor(R.id.ssid, getResources().getColor(R.color.colorDisableAccessPoint));
+                remoteViews.setTextColor(R.id.ssid,
+                        ContextCompat.getColor(getApplication(), R.color.colorDisableAccessPoint));
             }
 
             // https://developer.android.com/guide/topics/appwidgets/
