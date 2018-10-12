@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,6 @@ import link.webarata3.dro.housewifi.activity.SsidAdapter;
 import link.webarata3.dro.housewifi.dao.SsidDao;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.HouseWiFiiModel;
-import link.webarata3.dro.housewifi.model.Ssid;
 
 public class MainActivityFragment extends Fragment {
     private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
