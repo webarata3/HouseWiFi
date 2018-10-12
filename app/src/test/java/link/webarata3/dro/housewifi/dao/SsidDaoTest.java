@@ -1,4 +1,4 @@
-package link.webarata3.dro.housewifi;
+package link.webarata3.dro.housewifi.dao;
 
 import org.junit.After;
 import org.junit.Before;

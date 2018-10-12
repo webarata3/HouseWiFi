@@ -8,6 +8,7 @@ public class AccessPoint {
         this.ssid = ssid;
         this.quality = 2 * (level + 100);
         this.quality = this.quality > 100 ? 100 : this.quality;
+        this.quality = this.quality < 0 ? 0 : this.quality;
     }
 
     public String getSsid() {
