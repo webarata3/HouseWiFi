@@ -46,7 +46,7 @@ public class SsidAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.ssid_listview_row, parent, false);
+            convertView = layoutInflater.inflate(R.layout.ssid_list_row, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.ssidView = convertView.findViewById(R.id.ssidTextView);
             convertView.setTag(viewHolder);

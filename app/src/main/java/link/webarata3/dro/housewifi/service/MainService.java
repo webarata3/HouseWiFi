@@ -50,7 +50,7 @@ public class MainService extends RemoteViewsService {
             String ssid = reservedSsidList.get(position).getSsid();
             AccessPoint ssidData = ssidMap.get(ssid);
 
-            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_listview_row);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_list_row);
             remoteViews.setTextViewText(R.id.ssid, ssid);
             remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
 
