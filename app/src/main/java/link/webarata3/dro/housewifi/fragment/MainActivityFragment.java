@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.SsidAdapter;
@@ -25,7 +26,7 @@ public class MainActivityFragment extends Fragment {
     private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
 
     private HouseWiFiModel model;
-    private ListView listView;
+    private RecyclerView recyclerView;
 
     public MainActivityFragment() {
     }
@@ -35,8 +36,8 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        listView = view.findViewById(R.id.listView);
-        readSsidList(listView);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        readSsidList(recyclerView);
 
         model = HouseWiFiModel.getInstance();
 
@@ -83,17 +84,15 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
-    private void readSsidList(ListView listView) {
+    private void readSsidList(RecyclerView recyclerView) {
         DatabaseHelper helper = new DatabaseHelper(getActivity());
         helper.executeQuery(db -> {
             SsidDao ssidDao = new SsidDao(db);
             model.setSsidList(ssidDao.selectAll());
 
             AppExecutors.getInstance().mainThread().execute(() -> {
-                Activity activity = Objects.requireNonNull(getActivity());
-                SsidAdapter ssidAdapter = new SsidAdapter(activity);
-                ssidAdapter.setSsidList(model.getSsidList());
-                listView.setAdapter(ssidAdapter);
+                SsidAdapter ssidAdapter = new SsidAdapter(model.getSsidList());
+                recyclerView.setAdapter(ssidAdapter);
             });
         });
     }
