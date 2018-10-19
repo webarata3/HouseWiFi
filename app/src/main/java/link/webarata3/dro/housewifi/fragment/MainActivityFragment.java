@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.Objects;
 
@@ -25,7 +24,7 @@ import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 public class MainActivityFragment extends Fragment {
     private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
 
-    private HouseWiFiModel model;
+    private static HouseWiFiModel model;
     private RecyclerView recyclerView;
 
     public MainActivityFragment() {

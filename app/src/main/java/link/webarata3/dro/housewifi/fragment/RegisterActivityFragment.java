@@ -22,15 +22,13 @@ import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 
 public class RegisterActivityFragment extends Fragment {
-    private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
-
     public RegisterActivityFragment() {
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         return view;
     }
