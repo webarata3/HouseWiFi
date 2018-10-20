@@ -11,7 +11,6 @@ import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 
 public class HouseWiFiModel {
     private static HouseWiFiModel model;
-    private AppExecutors appExecutors;
     private List<HouseWifiObserver> houseWifiObserverList;
     private boolean firstAccess;
     private boolean acceptPermission;
@@ -19,7 +18,6 @@ public class HouseWiFiModel {
 
     private HouseWiFiModel() {
         houseWifiObserverList = new ArrayList<>();
-        appExecutors = AppExecutors.getInstance();
     }
 
     public static synchronized HouseWiFiModel getInstance() {
@@ -65,17 +63,19 @@ public class HouseWiFiModel {
     }
 
     public void readAllSsid(Context context) {
-        DatabaseHelper helper = new DatabaseHelper(context);
-        helper.executeQuery(db -> {
-            SsidDao ssidDao = new SsidDao(db);
-            model.setSsidList(ssidDao.selectAll());
+        AppExecutors.getInstance().diskIo().execute(() -> {
+            DatabaseHelper helper = new DatabaseHelper(context);
+            helper.executeQuery(db -> {
+                SsidDao ssidDao = new SsidDao(db);
+                model.setSsidList(ssidDao.selectAll());
 
-            notifyObservers(Event.updateList);
+                notifyObservers(Event.updateList);
+            });
         });
     }
 
     public void registerSsid(Context context, Ssid ssid) {
-        appExecutors.diskIo().execute(() -> {
+        AppExecutors.getInstance().diskIo().execute(() -> {
             DatabaseHelper helper = new DatabaseHelper(context);
             helper.executeInTransaction(db -> {
                 SsidDao ssidDao = new SsidDao(helper.getWritableDatabase());
