@@ -1,30 +1,17 @@
 package link.webarata3.dro.housewifi.fragment;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.R;
-import link.webarata3.dro.housewifi.activity.SsidAdapter;
-import link.webarata3.dro.housewifi.dao.SsidDao;
-import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 import link.webarata3.dro.housewifi.model.Ssid;
 
@@ -76,7 +63,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
     @Override
     public void update(HouseWiFiModel.Event event) {
         switch (event) {
-            case Register:
+            case REGISTER:
                 Snackbar.make(getView(), "登録しました。", Snackbar.LENGTH_SHORT).show();
                 break;
         }

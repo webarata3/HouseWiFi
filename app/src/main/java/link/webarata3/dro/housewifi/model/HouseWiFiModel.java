@@ -69,7 +69,7 @@ public class HouseWiFiModel {
                 SsidDao ssidDao = new SsidDao(db);
                 model.setSsidList(ssidDao.selectAll());
 
-                notifyObservers(Event.updateList);
+                notifyObservers(Event.UPDATE_LIST);
             });
         });
     }
@@ -80,13 +80,13 @@ public class HouseWiFiModel {
             helper.executeInTransaction(db -> {
                 SsidDao ssidDao = new SsidDao(helper.getWritableDatabase());
                 ssidDao.insert(ssid);
-                notifyObservers(Event.Register);
+                notifyObservers(Event.REGISTER);
             });
         });
     }
 
     public enum Event {
-        Register, updateList;
+        REGISTER, UPDATE_LIST;
     }
 
     public interface HouseWifiObserver {

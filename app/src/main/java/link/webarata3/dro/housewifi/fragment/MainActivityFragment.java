@@ -84,7 +84,7 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
     @Override
     public void update(HouseWiFiModel.Event event) {
         switch (event) {
-            case updateList:
+            case UPDATE_LIST:
                 SsidAdapter ssidAdapter = new SsidAdapter(model.getSsidList());
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(linearLayoutManager);
