@@ -4,6 +4,13 @@ public class Ssid {
     private int id;
     private String ssid;
 
+    public Ssid() {
+    }
+
+    public Ssid(String ssid) {
+        this.ssid = ssid;
+    }
+
     public int getId() {
         return id;
     }

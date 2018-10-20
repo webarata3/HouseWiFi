@@ -8,8 +8,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import link.webarata3.dro.housewifi.R;
+import link.webarata3.dro.housewifi.fragment.RegisterActivityFragment;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity
+        implements RegisterActivityFragment.OnRegisterFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +24,10 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public void onClickRegisterButton() {
+
     }
 }

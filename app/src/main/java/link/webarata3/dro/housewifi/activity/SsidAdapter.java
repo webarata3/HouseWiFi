@@ -24,12 +24,11 @@ public class SsidAdapter extends RecyclerView.Adapter<SsidViewHolder> {
     public SsidViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ssid_list_row, parent, false);
-        SsidViewHolder ssidViewHolder = new SsidViewHolder(inflate);
-        return ssidViewHolder;
+        return new SsidViewHolder(inflate);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull  SsidViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SsidViewHolder holder, int position) {
         holder.getSsidTextView().setText(ssidList.get(position).getSsid());
     }
 

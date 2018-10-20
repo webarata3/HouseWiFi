@@ -1,12 +1,26 @@
 package link.webarata3.dro.housewifi.model;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import link.webarata3.dro.housewifi.AppExecutors;
+import link.webarata3.dro.housewifi.dao.SsidDao;
+import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 
 public class HouseWiFiModel {
     private static HouseWiFiModel model;
+    private AppExecutors appExecutors;
+    private List<HouseWifiObserver> houseWifiObserverList;
+    private boolean firstAccess;
+    private boolean acceptPermission;
+    private List<Ssid> ssidList;
 
     private HouseWiFiModel() {
-        // ignore
+        houseWifiObserverList = new ArrayList<>();
+        appExecutors = AppExecutors.getInstance();
     }
 
     public static synchronized HouseWiFiModel getInstance() {
@@ -17,9 +31,15 @@ public class HouseWiFiModel {
         return model;
     }
 
-    private boolean firstAccess;
-    private boolean acceptPermission;
-    private List<Ssid> ssidList;
+    public void addObserver(HouseWifiObserver houseWifiObserver) {
+        houseWifiObserverList.add(houseWifiObserver);
+    }
+
+    public void notifyObservers(Event event) {
+        for (HouseWifiObserver observer : houseWifiObserverList) {
+            observer.update(event);
+        }
+    }
 
     public boolean isFirstAccess() {
         return firstAccess;
@@ -43,5 +63,32 @@ public class HouseWiFiModel {
 
     public void setSsidList(List<Ssid> ssidList) {
         this.ssidList = ssidList;
+    }
+
+    public void registerSsid(Context context, Ssid ssid) {
+        appExecutors.diskIo().execute(() -> {
+            DatabaseHelper helper = new DatabaseHelper(context);
+
+            SQLiteDatabase db = helper.getWritableDatabase();
+
+            db.beginTransaction();
+            try {
+                SsidDao ssidDao = new SsidDao(helper.getWritableDatabase());
+                ssidDao.insert(ssid);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+
+            notifyObservers(Event.Register);
+        });
+    }
+
+    public enum Event {
+        Register, updateList;
+    }
+
+    public interface HouseWifiObserver {
+        void update(Event event);
     }
 }

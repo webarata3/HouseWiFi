@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.R;
@@ -22,9 +23,8 @@ import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 
 public class MainActivityFragment extends Fragment {
-    private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
-
     private static HouseWiFiModel model;
+    private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
     private RecyclerView recyclerView;
 
     public MainActivityFragment() {
@@ -35,10 +35,10 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        model = HouseWiFiModel.getInstance();
+
         recyclerView = view.findViewById(R.id.recyclerView);
         readSsidList(recyclerView);
-
-        model = HouseWiFiModel.getInstance();
 
         Activity activity = Objects.requireNonNull(getActivity());
         SharedPreferences preferences = activity.getSharedPreferences("settings",
@@ -91,6 +91,8 @@ public class MainActivityFragment extends Fragment {
 
             AppExecutors.getInstance().mainThread().execute(() -> {
                 SsidAdapter ssidAdapter = new SsidAdapter(model.getSsidList());
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(ssidAdapter);
             });
         });
