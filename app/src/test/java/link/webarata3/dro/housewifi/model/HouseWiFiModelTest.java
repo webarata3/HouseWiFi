@@ -1,6 +1,8 @@
 package link.webarata3.dro.housewifi.model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +14,12 @@ import java.util.List;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 public class HouseWiFiModelTest {
@@ -23,6 +28,26 @@ public class HouseWiFiModelTest {
     @Before
     public void setUp() {
         mockContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(mockContext);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+    }
+
+    @Test
+    public void test_checkFirstAccess() {
+        HouseWiFiModel houseWiFiModel = HouseWiFiModel.getInstance();
+        boolean isFirstAccess = houseWiFiModel.checkFirstAccess(mockContext);
+        assertThat(isFirstAccess, is(true));
+    }
+
+    @Test
+    public void test_saveNotFirstAccess() {
+        HouseWiFiModel houseWiFiModel = HouseWiFiModel.getInstance();
+        houseWiFiModel.saveNotFirstAccess(mockContext);
+        boolean isFirstAccess = houseWiFiModel.checkFirstAccess(mockContext);
+        assertThat(isFirstAccess, is(false));
     }
 
     @Test

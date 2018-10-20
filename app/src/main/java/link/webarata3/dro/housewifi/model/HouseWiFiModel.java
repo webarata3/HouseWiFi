@@ -1,6 +1,9 @@
 package link.webarata3.dro.housewifi.model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,6 @@ import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 public class HouseWiFiModel {
     private static HouseWiFiModel model;
     private List<HouseWifiObserver> houseWifiObserverList;
-    private boolean firstAccess;
     private boolean acceptPermission;
     private List<Ssid> ssidList;
 
@@ -38,12 +40,16 @@ public class HouseWiFiModel {
         }
     }
 
-    public boolean isFirstAccess() {
-        return firstAccess;
+    public boolean checkFirstAccess(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean("firstAccess", true);
     }
 
-    public void setFirstAccess(boolean firstAccess) {
-        this.firstAccess = firstAccess;
+    public void saveNotFirstAccess(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("firstAccess", false);
+        editor.apply();
     }
 
     public boolean isAcceptPermission() {

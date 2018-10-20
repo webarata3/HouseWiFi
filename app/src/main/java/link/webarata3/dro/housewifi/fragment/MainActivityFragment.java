@@ -2,7 +2,6 @@ package link.webarata3.dro.housewifi.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,16 +37,10 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
         recyclerView = view.findViewById(R.id.recyclerView);
         model.readAllSsid(getActivity());
 
-        Activity activity = Objects.requireNonNull(getActivity());
-        SharedPreferences preferences = activity.getSharedPreferences("settings",
-                Activity.MODE_PRIVATE);
-        model.setFirstAccess(preferences.getBoolean("firstAccess", true));
         model.setAcceptPermission(checkPermission());
 
-        if (model.isFirstAccess()) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstAccess", false);
-            editor.apply();
+        if (model.checkFirstAccess(getActivity())) {
+            model.saveNotFirstAccess(getActivity());
             if (!model.isAcceptPermission()) {
                 requestPermission();
             }
