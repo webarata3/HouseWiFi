@@ -65,6 +65,16 @@ public class HouseWiFiModel {
         this.ssidList = ssidList;
     }
 
+    public void readAllSsid(Context context) {
+        DatabaseHelper helper = new DatabaseHelper(context);
+        helper.executeQuery(db -> {
+            SsidDao ssidDao = new SsidDao(db);
+            model.setSsidList(ssidDao.selectAll());
+
+            notifyObservers(Event.updateList);
+        });
+    }
+
     public void registerSsid(Context context, Ssid ssid) {
         appExecutors.diskIo().execute(() -> {
             DatabaseHelper helper = new DatabaseHelper(context);

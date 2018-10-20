@@ -15,14 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.SsidAdapter;
-import link.webarata3.dro.housewifi.dao.SsidDao;
-import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
     private static HouseWiFiModel model;
     private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
     private RecyclerView recyclerView;
@@ -36,9 +33,10 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         model = HouseWiFiModel.getInstance();
+        model.addObserver(this);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        readSsidList(recyclerView);
+        model.readAllSsid(getActivity());
 
         Activity activity = Objects.requireNonNull(getActivity());
         SharedPreferences preferences = activity.getSharedPreferences("settings",
@@ -83,18 +81,15 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
-    private void readSsidList(RecyclerView recyclerView) {
-        DatabaseHelper helper = new DatabaseHelper(getActivity());
-        helper.executeQuery(db -> {
-            SsidDao ssidDao = new SsidDao(db);
-            model.setSsidList(ssidDao.selectAll());
-
-            AppExecutors.getInstance().mainThread().execute(() -> {
+    @Override
+    public void update(HouseWiFiModel.Event event) {
+        switch (event) {
+            case updateList:
                 SsidAdapter ssidAdapter = new SsidAdapter(model.getSsidList());
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(ssidAdapter);
-            });
-        });
+                break;
+        }
     }
 }
