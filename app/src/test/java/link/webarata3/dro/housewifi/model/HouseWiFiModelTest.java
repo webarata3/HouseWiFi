@@ -51,7 +51,15 @@ public class HouseWiFiModelTest {
     }
 
     @Test
-    public void test_get_set_SsidList() {
+    public void test_is_set_acceptPermission() {
+        HouseWiFiModel houseWiFiModel = HouseWiFiModel.getInstance();
+        houseWiFiModel.setAcceptPermission(true);
+
+        assertThat(houseWiFiModel.isAcceptPermission(), is(true));
+    }
+
+    @Test
+    public void test_get_set_ssidList() {
         List<Ssid> ssidList = new ArrayList<>();
         ssidList.add(new Ssid("dummy"));
 
