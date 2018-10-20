@@ -1,7 +1,6 @@
 package link.webarata3.dro.housewifi.model;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,19 +77,11 @@ public class HouseWiFiModel {
     public void registerSsid(Context context, Ssid ssid) {
         appExecutors.diskIo().execute(() -> {
             DatabaseHelper helper = new DatabaseHelper(context);
-
-            SQLiteDatabase db = helper.getWritableDatabase();
-
-            db.beginTransaction();
-            try {
+            helper.executeInTransaction(db -> {
                 SsidDao ssidDao = new SsidDao(helper.getWritableDatabase());
                 ssidDao.insert(ssid);
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-
-            notifyObservers(Event.Register);
+                notifyObservers(Event.Register);
+            });
         });
     }
 
