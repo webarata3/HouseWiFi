@@ -9,21 +9,26 @@ import java.util.List;
 
 import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.dao.SsidDao;
+import link.webarata3.dro.housewifi.dao.SsidService;
+import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 
 public class HouseWiFiModel {
     private static HouseWiFiModel model;
+
     private List<HouseWifiObserver> houseWifiObserverList;
     private boolean acceptPermission;
     private List<Ssid> ssidList;
+    private SsidService ssidService;
 
-    private HouseWiFiModel() {
+    private HouseWiFiModel(SsidService ssidService) {
         houseWifiObserverList = new ArrayList<>();
+        this.ssidService = ssidService;
     }
 
-    public static synchronized HouseWiFiModel getInstance() {
+    public static synchronized HouseWiFiModel getInstance(SsidService ssidService) {
         if (model == null) {
-            model = new HouseWiFiModel();
+            model = new HouseWiFiModel(ssidService);
         }
 
         return model;
@@ -80,31 +85,18 @@ public class HouseWiFiModel {
     }
 
 
-    public void readAllSsid(Context context) {
-        AppExecutors.getInstance().diskIo().execute(() -> {
-            DatabaseHelper helper = createDatabaseHelper(context);
-            helper.executeQuery(this::readAllSsid);
+    public void readAllSsid() {
+        ssidService.readAll(ssidList -> {
+            this.ssidList = ssidList;
+
+            notifyObservers(Event.UPDATE_LIST);
         });
     }
 
-    protected void readAllSsid(SQLiteDatabase db) {
-        SsidDao ssidDao = createSsidDao(db);
-        model.setSsidList(ssidDao.selectAll());
-
-        notifyObservers(Event.UPDATE_LIST);
-    }
-
-    public void registerSsid(Context context, Ssid ssid) {
-        AppExecutors.getInstance().diskIo().execute(() -> {
-            DatabaseHelper helper = createDatabaseHelper(context);
-            helper.executeInTransaction(db -> registerSsid(db, ssid));
+    public void registerSsid(Ssid ssid) {
+        ssidService.register(ssid, () -> {
+            notifyObservers(Event.REGISTER);
         });
-    }
-
-    protected void registerSsid(SQLiteDatabase db, Ssid ssid) {
-        SsidDao ssidDao = createSsidDao(db);
-        ssidDao.insert(ssid);
-        notifyObservers(Event.REGISTER);
     }
 
     public enum Event {

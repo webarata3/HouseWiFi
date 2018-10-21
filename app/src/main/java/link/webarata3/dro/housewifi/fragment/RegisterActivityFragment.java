@@ -12,6 +12,8 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import link.webarata3.dro.housewifi.R;
+import link.webarata3.dro.housewifi.dao.SsidService;
+import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 import link.webarata3.dro.housewifi.model.Ssid;
 
@@ -34,7 +36,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        model = HouseWiFiModel.getInstance();
+        model = HouseWiFiModel.getInstance(new SsidServiceImpl(getActivity()));
         model.addObserver(this);
 
         ssidEditText = view.findViewById(R.id.ssidEditText);
@@ -55,7 +57,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
     }
 
     private void onClickRegisterButton() {
-        model.registerSsid(getActivity(), new Ssid(ssidEditText.getText().toString()));
+        model.registerSsid(new Ssid(ssidEditText.getText().toString()));
 
         onRegisterFragmentListener.onClickRegisterButton();
     }
