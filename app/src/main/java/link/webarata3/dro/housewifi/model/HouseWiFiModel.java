@@ -2,16 +2,11 @@ package link.webarata3.dro.housewifi.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import link.webarata3.dro.housewifi.AppExecutors;
-import link.webarata3.dro.housewifi.dao.SsidDao;
 import link.webarata3.dro.housewifi.dao.SsidService;
-import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
-import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 
 public class HouseWiFiModel {
     private static HouseWiFiModel model;
@@ -75,15 +70,6 @@ public class HouseWiFiModel {
     public void setSsidList(List<Ssid> ssidList) {
         this.ssidList = ssidList;
     }
-
-    protected SsidDao createSsidDao(SQLiteDatabase db) {
-        return new SsidDao(db);
-    }
-
-    protected DatabaseHelper createDatabaseHelper(Context context) {
-        return new DatabaseHelper(context);
-    }
-
 
     public void readAllSsid() {
         ssidService.readAll(ssidList -> {
