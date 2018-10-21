@@ -1,5 +1,6 @@
 package link.webarata3.dro.housewifi.model;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import org.junit.Before;
@@ -16,20 +17,28 @@ import link.webarata3.dro.housewifi.dao.SsidServiceTest;
 
 import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HouseWiFiModelTest {
-    HouseWiFiModel model;
+    @Mock
+    private Context context;
+
+
+    private HouseWiFiModel model;
+    @Mock
+    private SQLiteDatabase mockDb;
 
     @Before
     public void setup() {
         model = HouseWiFiModel.getInstance(new SettingServiceTest(), new SsidServiceTest());
     }
 
-    @Mock
-    private SQLiteDatabase mockDb;
+    @Test
+    public void test_getDefaultInstance() {
+        assertThat(HouseWiFiModel.getDefaultInstance(context), is(notNullValue()));
+    }
 
     @Test
     public void test_checkFirstAccess() {
