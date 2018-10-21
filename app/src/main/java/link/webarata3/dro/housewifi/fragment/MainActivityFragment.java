@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.SsidAdapter;
-import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 
 public class MainActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
@@ -32,7 +31,7 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        model = HouseWiFiModel.getInstance(new SsidServiceImpl(getActivity()));
+        model = HouseWiFiModel.getDefaultInstance(getActivity());
         model.addObserver(this);
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -40,8 +39,8 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
 
         model.setAcceptPermission(checkPermission());
 
-        if (model.checkFirstAccess(getActivity())) {
-            model.saveNotFirstAccess(getActivity());
+        if (model.checkFirstAccess()) {
+            model.saveNotFirstAccess();
             if (!model.isAcceptPermission()) {
                 requestPermission();
             }

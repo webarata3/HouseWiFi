@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import link.webarata3.dro.housewifi.dao.SsidService;
 import link.webarata3.dro.housewifi.dao.SsidServiceTest;
 
+import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +41,7 @@ public class HouseWiFiModelTest {
 
         model.readAllSsid();
 
-        verify(mockObserver, timeout(1000).times(1)).update(HouseWiFiModel.Event.UPDATE_LIST);
+        verify(mockObserver, timeout(1000).times(1)).update(UPDATE_LIST);
     }
 
     @Test
@@ -52,6 +52,6 @@ public class HouseWiFiModelTest {
 
         model.registerSsid(new Ssid("dummy"));
 
-        verify(mockObserver, timeout(1000).times(1)).update(HouseWiFiModel.Event.REGISTER);
+        verify(mockObserver, timeout(1000).times(1)).update(REGISTER);
     }
 }

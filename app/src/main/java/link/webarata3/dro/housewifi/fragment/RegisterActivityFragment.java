@@ -36,7 +36,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        model = HouseWiFiModel.getInstance(new SsidServiceImpl(getActivity()));
+        model = HouseWiFiModel.getDefaultInstance(getActivity());
         model.addObserver(this);
 
         ssidEditText = view.findViewById(R.id.ssidEditText);

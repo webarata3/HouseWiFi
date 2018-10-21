@@ -1,12 +1,14 @@
 package link.webarata3.dro.housewifi.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import link.webarata3.dro.housewifi.dao.SettingService;
 import link.webarata3.dro.housewifi.dao.SsidService;
+import link.webarata3.dro.housewifi.dao.impl.SettingServiceImpl;
+import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
 
 public class HouseWiFiModel {
     private static HouseWiFiModel model;
@@ -14,16 +16,23 @@ public class HouseWiFiModel {
     private List<HouseWifiObserver> houseWifiObserverList;
     private boolean acceptPermission;
     private List<Ssid> ssidList;
+    private SettingService settingService;
     private SsidService ssidService;
 
-    private HouseWiFiModel(SsidService ssidService) {
+    private HouseWiFiModel(SettingService settingService, SsidService ssidService) {
         houseWifiObserverList = new ArrayList<>();
+        this.settingService = settingService;
         this.ssidService = ssidService;
     }
 
-    public static synchronized HouseWiFiModel getInstance(SsidService ssidService) {
+    public static synchronized HouseWiFiModel getDefaultInstance(Context context) {
+        if (model != null) return model;
+        return getInstance(new SettingServiceImpl(context), new SsidServiceImpl(context));
+    }
+
+    public static synchronized HouseWiFiModel getInstance(SettingService settingService, SsidService ssidService) {
         if (model == null) {
-            model = new HouseWiFiModel(ssidService);
+            model = new HouseWiFiModel(settingService, ssidService);
         }
 
         return model;
@@ -39,20 +48,12 @@ public class HouseWiFiModel {
         }
     }
 
-    protected SharedPreferences createSharedPreferences(Context context) {
-        return context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+    public boolean checkFirstAccess() {
+        return settingService.checkFirstAccess();
     }
 
-    public boolean checkFirstAccess(Context context) {
-        SharedPreferences preferences = createSharedPreferences(context);
-        return preferences.getBoolean("firstAccess", true);
-    }
-
-    public void saveNotFirstAccess(Context context) {
-        SharedPreferences preferences = createSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("firstAccess", false);
-        editor.apply();
+    public void saveNotFirstAccess() {
+        settingService.saveNotFirstAccess();
     }
 
     public boolean isAcceptPermission() {
