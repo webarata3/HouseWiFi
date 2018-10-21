@@ -46,6 +46,12 @@ public class HouseWiFiModelTest {
 
     @Test
     public void test_registerSsid() {
+        HouseWiFiModel model = HouseWiFiModel.getInstance(new SsidServiceTest());
+        HouseWiFiModel.HouseWifiObserver mockObserver = mock(HouseWiFiModel.HouseWifiObserver.class);
+        model.addObserver(mockObserver);
 
+        model.registerSsid(new Ssid("dummy"));
+
+        verify(mockObserver, timeout(1000).times(1)).update(HouseWiFiModel.Event.REGISTER);
     }
 }
