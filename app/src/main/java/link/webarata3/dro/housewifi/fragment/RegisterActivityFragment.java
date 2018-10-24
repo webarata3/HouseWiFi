@@ -42,7 +42,23 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
         ssidEditText = view.findViewById(R.id.ssidEditText);
         view.findViewById(R.id.registerButton).setOnClickListener(v -> onClickRegisterButton());
 
+        view.findViewById(R.id.registerButton).setOnClickListener(v -> {
+            String validateResult = validate();
+            if (validateResult != null) {
+                ssidEditText.setError(validateResult);
+            }
+        });
+
         return view;
+    }
+
+    private String validate() {
+        String ssid = ssidEditText.getText().toString();
+        if (ssid.length() == 0) {
+            return "入力必須です";
+        }
+
+        return null;
     }
 
     @Override
