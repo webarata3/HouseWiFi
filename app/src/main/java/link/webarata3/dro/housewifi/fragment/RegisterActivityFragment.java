@@ -12,8 +12,6 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import link.webarata3.dro.housewifi.R;
-import link.webarata3.dro.housewifi.dao.SsidService;
-import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 import link.webarata3.dro.housewifi.model.Ssid;
 
@@ -23,10 +21,6 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
     private EditText ssidEditText;
 
     private OnRegisterFragmentListener onRegisterFragmentListener;
-
-    public interface OnRegisterFragmentListener {
-        void onClickRegisterButton();
-    }
 
     public RegisterActivityFragment() {
     }
@@ -85,5 +79,9 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
                 Snackbar.make(getView(), "登録しました。", Snackbar.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    public interface OnRegisterFragmentListener {
+        void onClickRegisterButton();
     }
 }
