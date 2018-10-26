@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 import link.webarata3.dro.housewifi.model.Ssid;
+import link.webarata3.dro.housewifi.validator.ValidateResult;
 
 public class RegisterActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
     private static HouseWiFiModel model;
@@ -37,22 +38,23 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
         view.findViewById(R.id.registerButton).setOnClickListener(v -> onClickRegisterButton());
 
         view.findViewById(R.id.registerButton).setOnClickListener(v -> {
-            String validateResult = validate();
-            if (validateResult != null) {
-                ssidEditText.setError(validateResult);
+            ValidateResult validateResult = validate();
+            if (!validateResult.isValid()) {
+                ssidEditText.setError(validateResult.getErrorMessage());
             }
         });
 
         return view;
     }
 
-    private String validate() {
+    @NonNull
+    private ValidateResult validate() {
         String ssid = ssidEditText.getText().toString();
         if (ssid.length() == 0) {
-            return "入力必須です";
+            return new ValidateResult("入力必須です");
         }
 
-        return null;
+        return new ValidateResult();
     }
 
     @Override
