@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import link.webarata3.dro.housewifi.R;
@@ -18,9 +16,7 @@ import link.webarata3.dro.housewifi.validator.ValidateResult;
 
 public class RegisterActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
     private static HouseWiFiModel model;
-
     private EditText ssidEditText;
-
     private OnRegisterFragmentListener onRegisterFragmentListener;
 
     public RegisterActivityFragment() {
@@ -35,12 +31,13 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
         model.addObserver(this);
 
         ssidEditText = view.findViewById(R.id.ssidEditText);
-        view.findViewById(R.id.registerButton).setOnClickListener(v -> onClickRegisterButton());
 
         view.findViewById(R.id.registerButton).setOnClickListener(v -> {
             ValidateResult validateResult = validate();
             if (!validateResult.isValid()) {
                 ssidEditText.setError(validateResult.getErrorMessage());
+            } else {
+                model.registerSsid(new Ssid(ssidEditText.getText().toString()));
             }
         });
 
@@ -68,17 +65,17 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
         }
     }
 
-    private void onClickRegisterButton() {
-        model.registerSsid(new Ssid(ssidEditText.getText().toString()));
-
-        onRegisterFragmentListener.onClickRegisterButton();
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onRegisterFragmentListener = null;
     }
 
     @Override
     public void update(HouseWiFiModel.Event event) {
         switch (event) {
             case REGISTER:
-                Snackbar.make(getView(), "登録しました。", Snackbar.LENGTH_SHORT).show();
+                onRegisterFragmentListener.onClickRegisterButton();
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package link.webarata3.dro.housewifi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity
 
     @Override
     public void onClickRegisterButton() {
-
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
