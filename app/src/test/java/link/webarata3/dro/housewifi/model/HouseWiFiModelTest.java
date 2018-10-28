@@ -87,6 +87,6 @@ public class HouseWiFiModelTest {
 
         model.registerSsid(new Ssid("dummy"));
 
-        verify(mockObserver, timeout(2000).times(1)).update(REGISTER);
+        verify(mockObserver, timeout(1000).times(1)).update(REGISTER);
     }
 }

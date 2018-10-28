@@ -16,6 +16,6 @@ public class SsidServiceTest implements SsidService {
 
     @Override
     public void register(Ssid ssid, CallbackRegister callbackRegister) {
-        callbackRegister.execute(true);
+        callbackRegister.execute(false);
     }
 }
