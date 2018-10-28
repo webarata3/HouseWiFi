@@ -1,4 +1,4 @@
-# お家でWi-Fi
+# お家でWi-Fi [![CircleCI](https://circleci.com/gh/webarata3/HouseWiFi.svg?style=svg)](https://circleci.com/gh/webarata3/HouseWiFi)
 
 ## ライセンス
 
