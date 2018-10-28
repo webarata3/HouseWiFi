@@ -6,12 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import link.webarata3.dro.housewifi.R;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int REGISTER_SSID_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton addFab = findViewById(R.id.addFab);
         addFab.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REGISTER_SSID_CODE);
         });
     }
 
@@ -42,5 +45,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            //SecondActivityから戻ってきた場合
+            case (REGISTER_SSID_CODE):
+                if (resultCode == RESULT_OK) {
+                    Snackbar.make(findViewById(android.R.id.content), "登録しました。", Snackbar.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }

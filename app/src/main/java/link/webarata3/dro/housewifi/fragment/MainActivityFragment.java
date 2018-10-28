@@ -76,6 +76,12 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        model.readAllSsid();
+    }
+
+    @Override
     public void update(HouseWiFiModel.Event event) {
         switch (event) {
             case UPDATE_LIST:
