@@ -81,8 +81,8 @@ public class HouseWiFiModel {
     }
 
     public void registerSsid(Ssid ssid) {
-        ssidService.register(ssid, (alreadyRegisterd) -> {
-            if (alreadyRegisterd) {
+        ssidService.register(ssid, (alreadyRegistered) -> {
+            if (alreadyRegistered) {
                 notifyObservers(Event.ALREADY_REGISTERD);
             } else {
                 notifyObservers(Event.REGISTER);
