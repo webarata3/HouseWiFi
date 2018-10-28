@@ -81,13 +81,17 @@ public class HouseWiFiModel {
     }
 
     public void registerSsid(Ssid ssid) {
-        ssidService.register(ssid, () -> {
-            notifyObservers(Event.REGISTER);
+        ssidService.register(ssid, (alreadyRegisterd) -> {
+            if (alreadyRegisterd) {
+                notifyObservers(Event.ALREADY_REGISTERD);
+            } else {
+                notifyObservers(Event.REGISTER);
+            }
         });
     }
 
     public enum Event {
-        REGISTER, UPDATE_LIST
+        REGISTER, ALREADY_REGISTERD, UPDATE_LIST
     }
 
     public interface HouseWifiObserver {

@@ -29,9 +29,15 @@ public class SsidServiceImpl implements SsidService {
         DatabaseHelper helper = new DatabaseHelper(context);
         helper.executeQuery(db -> {
             SsidDao ssidDao = new SsidDao(db);
+
+            if (ssidDao.alreadyRegisterd(ssid.getSsid())) {
+                callbackRegister.execute(true);
+                return;
+            }
+
             ssidDao.insert(ssid);
 
-            callbackRegister.execute();
+            callbackRegister.execute(false);
         });
     }
 }

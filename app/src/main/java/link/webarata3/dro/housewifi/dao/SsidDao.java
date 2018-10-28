@@ -1,6 +1,7 @@
 package link.webarata3.dro.housewifi.dao;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
@@ -30,6 +31,11 @@ public class SsidDao {
         ssid.setSsid(cursor.getString(cursor.getColumnIndex("ssid")));
 
         return ssid;
+    }
+
+    public boolean alreadyRegisterd(String ssid) {
+        long count = DatabaseUtils.queryNumEntries(db, "ssid", "ssid = ?", new String[]{ssid});
+        return count != 0;
     }
 
     public List<Ssid> selectAll() {

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.SsidAdapter;
 import link.webarata3.dro.housewifi.model.HouseWiFiModel;
@@ -78,10 +79,12 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
     public void update(HouseWiFiModel.Event event) {
         switch (event) {
             case UPDATE_LIST:
-                SsidAdapter ssidAdapter = new SsidAdapter(model.getSsidList());
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(ssidAdapter);
+                AppExecutors.getInstance().mainThread().execute(() -> {
+                    SsidAdapter ssidAdapter = new SsidAdapter(model.getSsidList());
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(ssidAdapter);
+                });
                 break;
         }
     }

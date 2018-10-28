@@ -14,6 +14,6 @@ public interface SsidService {
     }
 
     interface CallbackRegister {
-        void execute();
+        void execute(boolean alreadyRegisterd);
     }
 }
