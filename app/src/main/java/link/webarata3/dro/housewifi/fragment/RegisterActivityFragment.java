@@ -75,6 +75,11 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
 
     @Override
     public void update(HouseWiFiModel.Event event) {
+        // 非同期イベントのため、detachされている恐れがあるため。
+        if (onRegisterFragmentListener == null || getView() == null) {
+            return;
+        }
+
         switch (event) {
             case REGISTER:
                 onRegisterFragmentListener.onClickRegisterButton();

@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity
 
     @Override
     public void onClickRegisterButton() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
     }

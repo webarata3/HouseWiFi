@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            //SecondActivityから戻ってきた場合
             case (REGISTER_SSID_CODE):
                 if (resultCode == RESULT_OK) {
                     Snackbar.make(findViewById(android.R.id.content), "登録しました。", Snackbar.LENGTH_SHORT).show();
