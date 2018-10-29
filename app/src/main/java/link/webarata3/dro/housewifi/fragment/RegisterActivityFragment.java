@@ -84,7 +84,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
             case REGISTER:
                 onRegisterFragmentListener.onClickRegisterButton();
                 break;
-            case ALREADY_REGISTERD:
+            case ALREADY_REGISTERED:
                 Snackbar.make(getView(), "すでに登録済みのSSIDです", Snackbar.LENGTH_SHORT).show();
                 break;
         }

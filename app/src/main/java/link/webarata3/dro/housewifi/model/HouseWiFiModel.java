@@ -83,7 +83,7 @@ public class HouseWiFiModel {
     public void registerSsid(Ssid ssid) {
         ssidService.register(ssid, (alreadyRegistered) -> {
             if (alreadyRegistered) {
-                notifyObservers(Event.ALREADY_REGISTERD);
+                notifyObservers(Event.ALREADY_REGISTERED);
             } else {
                 notifyObservers(Event.REGISTER);
             }
@@ -91,7 +91,7 @@ public class HouseWiFiModel {
     }
 
     public enum Event {
-        REGISTER, ALREADY_REGISTERD, UPDATE_LIST
+        REGISTER, ALREADY_REGISTERED, UPDATE_LIST
     }
 
     public interface HouseWifiObserver {
