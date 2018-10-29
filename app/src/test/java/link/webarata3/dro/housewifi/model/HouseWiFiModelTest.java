@@ -37,7 +37,12 @@ public class HouseWiFiModelTest {
 
     @Test
     public void test_getDefaultInstance() {
-        assertThat(HouseWiFiModel.getDefaultInstance(context), is(notNullValue()));
+        HouseWiFiModel firstInstance = HouseWiFiModel.getDefaultInstance(context);
+        assertThat(firstInstance, is(notNullValue()));
+        // 2回動かして1回目と同じインスタンスが取得できているかを確認する
+        HouseWiFiModel secondInstance = HouseWiFiModel.getDefaultInstance(context);
+        assertThat(secondInstance, is(notNullValue()));
+        assertThat(firstInstance == secondInstance, is(true));
     }
 
     @Test
