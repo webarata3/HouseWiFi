@@ -14,7 +14,7 @@ import link.webarata3.dro.housewifi.activity.MainWidget;
 import link.webarata3.dro.housewifi.dao.SsidDao;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.AccessPoint;
-import link.webarata3.dro.housewifi.model.ConnectedWifi;
+import link.webarata3.dro.housewifi.model.ConnectedWiFi;
 import link.webarata3.dro.housewifi.model.Ssid;
 import link.webarata3.dro.housewifi.util.WiFiUtil;
 
@@ -26,7 +26,7 @@ public class MainService extends RemoteViewsService {
 
     private class MainWidgetFactory implements RemoteViewsFactory {
         private List<Ssid> reservedSsidList;
-        private ConnectedWifi connectedWifi;
+        private ConnectedWiFi connectedWiFi;
         private Map<String, AccessPoint> ssidMap;
 
         @Override
@@ -54,8 +54,8 @@ public class MainService extends RemoteViewsService {
             remoteViews.setTextViewText(R.id.ssid, ssid);
             remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
 
-            if (connectedWifi != null && ssid.equals(connectedWifi.getSsid())) {
-                String other = getString(R.string.link_speed, connectedWifi.getLinkSpeed());
+            if (connectedWiFi != null && ssid.equals(connectedWiFi.getSsid())) {
+                String other = getString(R.string.link_speed, connectedWiFi.getLinkSpeed());
                 remoteViews.setTextViewText(R.id.linkSpeed, other);
 
                 remoteViews.setTextColor(R.id.ssid,
@@ -102,7 +102,7 @@ public class MainService extends RemoteViewsService {
         }
 
         private void fetchSsid() {
-            connectedWifi = WiFiUtil.getConnectedWifi(getApplicationContext());
+            connectedWiFi = WiFiUtil.getConnectedWiFi(getApplicationContext());
             ssidMap = WiFiUtil.getCurrentAccessPoint(getApplicationContext());
 
             reservedSsidList = new ArrayList<>();
