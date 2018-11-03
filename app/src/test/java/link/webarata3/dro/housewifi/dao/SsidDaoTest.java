@@ -47,4 +47,18 @@ public class SsidDaoTest {
         assertThat(resultSsid, is(notNullValue()));
         assertThat(resultSsid.getSsid(), is(TEST_DATA));
     }
+
+    @Test
+    public void test_alreadyRegistered() {
+        final String TEST_DATA = "wifi_access_point";
+
+        SsidDao ssidDao = new SsidDao(dbHelper.getReadableDatabase());
+        assertThat(ssidDao.alreadyRegisterd(TEST_DATA), is(false));
+
+        Ssid ssid = new Ssid();
+        ssid.setSsid(TEST_DATA);
+        ssidDao.insert(ssid);
+
+        assertThat(ssidDao.alreadyRegisterd(TEST_DATA), is(true));
+    }
 }
