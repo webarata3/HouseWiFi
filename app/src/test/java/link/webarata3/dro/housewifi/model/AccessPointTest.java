@@ -45,4 +45,10 @@ public class AccessPointTest {
         AccessPoint accessPoint = new AccessPoint("ssid", -101);
         assertThat(accessPoint.getQuality(), is(0));
     }
+
+    @Test
+    public void test_getSsid() {
+        AccessPoint accessPoint = new AccessPoint("ssid", -101);
+        assertThat(accessPoint.getSsid(), is("ssid"));
+    }
 }
