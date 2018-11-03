@@ -8,6 +8,7 @@ import org.robolectric.RuntimeEnvironment;
 
 import java.util.List;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.Ssid;
@@ -22,7 +23,7 @@ public class SsidDaoTest {
 
     @Before
     public void setUp() {
-        dbHelper = new DatabaseHelper(RuntimeEnvironment.application);
+        dbHelper = new DatabaseHelper(ApplicationProvider.getApplicationContext());
     }
 
     @After
