@@ -1,7 +1,6 @@
 package link.webarata3.dro.housewifi.model;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +12,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.webarata3.dro.housewifi.dao.SettingServiceTest;
+import link.webarata3.dro.housewifi.dao.SettingServiceTestImpl;
 import link.webarata3.dro.housewifi.dao.SsidServiceAlreadyRegisteredTest;
-import link.webarata3.dro.housewifi.dao.SsidServiceTest;
+import link.webarata3.dro.housewifi.dao.SsidServiceTestImpl;
 
 import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.ALREADY_REGISTERED;
 import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.REGISTER;
@@ -32,9 +31,6 @@ public class HouseWiFiModelTest {
     @Mock
     private Context context;
 
-    @Mock
-    private SQLiteDatabase mockDb;
-
     @Before
     public void setup() throws NoSuchFieldException, IllegalAccessException {
         // シングルトンのオブジェクトを無理やりnullにする
@@ -44,7 +40,7 @@ public class HouseWiFiModelTest {
     }
 
     private HouseWiFiModel getDefaultModel() {
-        return HouseWiFiModel.getInstance(new SettingServiceTest(), new SsidServiceTest());
+        return HouseWiFiModel.getInstance(new SettingServiceTestImpl(), new SsidServiceTestImpl());
     }
 
     @Test
@@ -118,7 +114,7 @@ public class HouseWiFiModelTest {
 
     @Test
     public void test_registerSsid_ALREADY_REGISTERED() {
-        HouseWiFiModel model = HouseWiFiModel.getInstance(new SettingServiceTest(), new SsidServiceAlreadyRegisteredTest());
+        HouseWiFiModel model = HouseWiFiModel.getInstance(new SettingServiceTestImpl(), new SsidServiceAlreadyRegisteredTest());
 
         HouseWiFiModel.HouseWifiObserver mockObserver = mock(HouseWiFiModel.HouseWifiObserver.class);
         model.addObserver(mockObserver);

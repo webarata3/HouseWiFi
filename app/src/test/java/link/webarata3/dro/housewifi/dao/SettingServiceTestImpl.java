@@ -1,6 +1,6 @@
 package link.webarata3.dro.housewifi.dao;
 
-public class SettingServiceTest implements SettingService {
+public class SettingServiceTestImpl implements SettingService {
     @Override
     public boolean checkFirstAccess() {
         return false;

@@ -5,7 +5,7 @@ import java.util.List;
 
 import link.webarata3.dro.housewifi.model.Ssid;
 
-public class SsidServiceTest implements SsidService {
+public class SsidServiceTestImpl implements SsidService {
     @Override
     public void readAll(CallbackReadAll callbackReadAll) {
         List<Ssid> ssidList = new ArrayList<>();
