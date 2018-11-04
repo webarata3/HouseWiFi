@@ -16,7 +16,7 @@ public class SsidServiceImpl implements SsidService {
 
     @Override
     public void readAll(CallbackReadAll callbackReadAll) {
-        helper.executeInTransaction(db -> {
+        helper.executeQuery(db -> {
             SsidDao ssidDao = new SsidDao(db);
 
             callbackReadAll.execute(ssidDao.selectAll());
@@ -25,7 +25,7 @@ public class SsidServiceImpl implements SsidService {
 
     @Override
     public void register(Ssid ssid, CallbackRegister callbackRegister) {
-        helper.executeQuery(db -> {
+        helper.executeInTransaction(db -> {
             SsidDao ssidDao = new SsidDao(db);
 
             if (ssidDao.alreadyRegisterd(ssid.getSsid())) {
