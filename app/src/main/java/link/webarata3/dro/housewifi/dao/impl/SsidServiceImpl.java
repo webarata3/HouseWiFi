@@ -8,15 +8,14 @@ import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.Ssid;
 
 public class SsidServiceImpl implements SsidService {
-    private Context context;
+    private DatabaseHelper helper;
 
     public SsidServiceImpl(Context context) {
-        this.context = context;
+        helper = new DatabaseHelper(context);
     }
 
     @Override
     public void readAll(CallbackReadAll callbackReadAll) {
-        DatabaseHelper helper = new DatabaseHelper(context);
         helper.executeInTransaction(db -> {
             SsidDao ssidDao = new SsidDao(db);
 
@@ -26,7 +25,6 @@ public class SsidServiceImpl implements SsidService {
 
     @Override
     public void register(Ssid ssid, CallbackRegister callbackRegister) {
-        DatabaseHelper helper = new DatabaseHelper(context);
         helper.executeQuery(db -> {
             SsidDao ssidDao = new SsidDao(db);
 
