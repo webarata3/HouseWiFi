@@ -1,11 +1,9 @@
 package link.webarata3.dro.housewifi.activity;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import link.webarata3.dro.housewifi.R;
 
