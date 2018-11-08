@@ -21,7 +21,7 @@ import link.webarata3.dro.housewifi.model.HouseWiFiModel;
 
 public class MainActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
     private static HouseWiFiModel model;
-    private final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
+    private static final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
     private RecyclerView recyclerView;
 
     public MainActivityFragment() {
