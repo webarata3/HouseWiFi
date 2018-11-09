@@ -16,9 +16,9 @@ import link.webarata3.dro.housewifi.dao.SettingServiceTestImpl;
 import link.webarata3.dro.housewifi.dao.SsidServiceAlreadyRegisteredTest;
 import link.webarata3.dro.housewifi.dao.SsidServiceTestImpl;
 
-import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.ALREADY_REGISTERED;
-import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.REGISTER;
-import static link.webarata3.dro.housewifi.model.HouseWiFiModel.Event.UPDATE_LIST;
+import static link.webarata3.dro.housewifi.model.HouseWifiModel.Event.ALREADY_REGISTERED;
+import static link.webarata3.dro.housewifi.model.HouseWifiModel.Event.REGISTER;
+import static link.webarata3.dro.housewifi.model.HouseWifiModel.Event.UPDATE_LIST;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -27,49 +27,49 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HouseWiFiModelTest {
+public class HouseWifiModelTest {
     @Mock
     private Context context;
 
     @Before
     public void setup() throws NoSuchFieldException, IllegalAccessException {
         // シングルトンのオブジェクトを無理やりnullにする
-        Field f = HouseWiFiModel.class.getDeclaredField("model");
+        Field f = HouseWifiModel.class.getDeclaredField("model");
         f.setAccessible(true);
         f.set(null, null);
     }
 
-    private HouseWiFiModel getDefaultModel() {
-        return HouseWiFiModel.getInstance(new SettingServiceTestImpl(), new SsidServiceTestImpl());
+    private HouseWifiModel getDefaultModel() {
+        return HouseWifiModel.getInstance(new SettingServiceTestImpl(), new SsidServiceTestImpl());
     }
 
     @Test
     public void test_getDefaultInstance() {
-        HouseWiFiModel firstInstance = HouseWiFiModel.getDefaultInstance(context);
+        HouseWifiModel firstInstance = HouseWifiModel.getDefaultInstance(context);
         assertThat(firstInstance, is(notNullValue()));
         // 2回動かして1回目と同じインスタンスが取得できているかを確認する
-        HouseWiFiModel secondInstance = HouseWiFiModel.getDefaultInstance(context);
+        HouseWifiModel secondInstance = HouseWifiModel.getDefaultInstance(context);
         assertThat(secondInstance, is(notNullValue()));
         assertThat(firstInstance == secondInstance, is(true));
     }
 
     @Test
     public void test_checkFirstAccess() {
-        HouseWiFiModel model = getDefaultModel();
+        HouseWifiModel model = getDefaultModel();
 
         assertThat(model.checkFirstAccess(), is(false));
     }
 
     @Test
     public void test_saveNotFirstAccess() {
-        HouseWiFiModel model = getDefaultModel();
+        HouseWifiModel model = getDefaultModel();
 
         model.saveNotFirstAccess();
     }
 
     @Test
     public void test_is_set_acceptPermission() {
-        HouseWiFiModel model = getDefaultModel();
+        HouseWifiModel model = getDefaultModel();
 
         model.setAcceptPermission(true);
 
@@ -81,7 +81,7 @@ public class HouseWiFiModelTest {
         List<Ssid> ssidList = new ArrayList<>();
         ssidList.add(new Ssid("dummy"));
 
-        HouseWiFiModel model = getDefaultModel();
+        HouseWifiModel model = getDefaultModel();
         model.setSsidList(ssidList);
         List<Ssid> resultSsidList = model.getSsidList();
 
@@ -92,8 +92,8 @@ public class HouseWiFiModelTest {
 
     @Test
     public void test_readAllSsid() {
-        HouseWiFiModel model = getDefaultModel();
-        HouseWiFiModel.HouseWifiObserver mockObserver = mock(HouseWiFiModel.HouseWifiObserver.class);
+        HouseWifiModel model = getDefaultModel();
+        HouseWifiModel.HouseWifiObserver mockObserver = mock(HouseWifiModel.HouseWifiObserver.class);
         model.addObserver(mockObserver);
 
         model.readAllSsid();
@@ -103,8 +103,8 @@ public class HouseWiFiModelTest {
 
     @Test
     public void test_registerSsid_REGISTER() {
-        HouseWiFiModel model = getDefaultModel();
-        HouseWiFiModel.HouseWifiObserver mockObserver = mock(HouseWiFiModel.HouseWifiObserver.class);
+        HouseWifiModel model = getDefaultModel();
+        HouseWifiModel.HouseWifiObserver mockObserver = mock(HouseWifiModel.HouseWifiObserver.class);
         model.addObserver(mockObserver);
 
         model.registerSsid(new Ssid("dummy"));
@@ -114,9 +114,9 @@ public class HouseWiFiModelTest {
 
     @Test
     public void test_registerSsid_ALREADY_REGISTERED() {
-        HouseWiFiModel model = HouseWiFiModel.getInstance(new SettingServiceTestImpl(), new SsidServiceAlreadyRegisteredTest());
+        HouseWifiModel model = HouseWifiModel.getInstance(new SettingServiceTestImpl(), new SsidServiceAlreadyRegisteredTest());
 
-        HouseWiFiModel.HouseWifiObserver mockObserver = mock(HouseWiFiModel.HouseWifiObserver.class);
+        HouseWifiModel.HouseWifiObserver mockObserver = mock(HouseWifiModel.HouseWifiObserver.class);
         model.addObserver(mockObserver);
 
         model.registerSsid(new Ssid("dummy"));

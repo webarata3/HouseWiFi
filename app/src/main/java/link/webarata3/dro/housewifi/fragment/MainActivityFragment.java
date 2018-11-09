@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import link.webarata3.dro.housewifi.AppExecutors;
 import link.webarata3.dro.housewifi.R;
 import link.webarata3.dro.housewifi.activity.SsidAdapter;
-import link.webarata3.dro.housewifi.model.HouseWiFiModel;
+import link.webarata3.dro.housewifi.model.HouseWifiModel;
 
-public class MainActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
-    private static HouseWiFiModel model;
+public class MainActivityFragment extends Fragment implements HouseWifiModel.HouseWifiObserver {
+    private static HouseWifiModel model;
     private static final int PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 0;
     private RecyclerView recyclerView;
 
@@ -32,7 +32,7 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        model = HouseWiFiModel.getDefaultInstance(getActivity());
+        model = HouseWifiModel.getDefaultInstance(getActivity());
         model.addObserver(this);
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -82,7 +82,7 @@ public class MainActivityFragment extends Fragment implements HouseWiFiModel.Hou
     }
 
     @Override
-    public void update(HouseWiFiModel.Event event) {
+    public void update(HouseWifiModel.Event event) {
         switch (event) {
             case UPDATE_LIST:
                 AppExecutors.getInstance().mainThread().execute(() -> {

@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public class ConnectedWiFiTest {
+public class ConnectedWifiTest {
     @Test
     public void test_get() {
         int ip = 45 << 8;
@@ -13,10 +13,10 @@ public class ConnectedWiFiTest {
         ip = (ip + 168) << 8;
         ip = ip + 192;
 
-        ConnectedWiFi connectedWiFi = new ConnectedWiFi("test_ssid", ip, 256);
+        ConnectedWifi connectedWifi = new ConnectedWifi("test_ssid", ip, 256);
 
-        assertThat(connectedWiFi.getSsid(), is("test_ssid"));
-        assertThat(connectedWiFi.getIpAddress(), is("192.168.123.45"));
-        assertThat(connectedWiFi.getLinkSpeed(), is(256));
+        assertThat(connectedWifi.getSsid(), is("test_ssid"));
+        assertThat(connectedWifi.getIpAddress(), is("192.168.123.45"));
+        assertThat(connectedWifi.getLinkSpeed(), is(256));
     }
 }

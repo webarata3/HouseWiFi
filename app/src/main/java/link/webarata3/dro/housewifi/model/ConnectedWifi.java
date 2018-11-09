@@ -1,11 +1,11 @@
 package link.webarata3.dro.housewifi.model;
 
-public class ConnectedWiFi {
+public class ConnectedWifi {
     private String ssid;
     private String ipAddress;
     private int linkSpeed;
 
-    public ConnectedWiFi(String ssid, int ipAddress, int linkSpeed) {
+    public ConnectedWifi(String ssid, int ipAddress, int linkSpeed) {
         this.ssid = ssid.replace("\"", "");
         this.ipAddress = (ipAddress & 0xFF) + "."
                 + ((ipAddress >> 8) & 0xFF) + "."

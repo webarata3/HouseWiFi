@@ -12,12 +12,12 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import link.webarata3.dro.housewifi.R;
-import link.webarata3.dro.housewifi.model.HouseWiFiModel;
+import link.webarata3.dro.housewifi.model.HouseWifiModel;
 import link.webarata3.dro.housewifi.model.Ssid;
 import link.webarata3.dro.housewifi.validator.ValidateResult;
 
-public class RegisterActivityFragment extends Fragment implements HouseWiFiModel.HouseWifiObserver {
-    private static HouseWiFiModel model;
+public class RegisterActivityFragment extends Fragment implements HouseWifiModel.HouseWifiObserver {
+    private static HouseWifiModel model;
     private EditText ssidEditText;
     private OnRegisterFragmentListener onRegisterFragmentListener;
 
@@ -29,7 +29,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        model = HouseWiFiModel.getDefaultInstance(getActivity());
+        model = HouseWifiModel.getDefaultInstance(getActivity());
         model.addObserver(this);
 
         ssidEditText = view.findViewById(R.id.ssidEditText);
@@ -74,7 +74,7 @@ public class RegisterActivityFragment extends Fragment implements HouseWiFiModel
     }
 
     @Override
-    public void update(HouseWiFiModel.Event event) {
+    public void update(HouseWifiModel.Event event) {
         // 非同期イベントのため、detachされている恐れがあるため。
         if (onRegisterFragmentListener == null || getView() == null) {
             return;

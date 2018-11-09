@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import link.webarata3.dro.housewifi.service.MainService;
 import link.webarata3.dro.housewifi.R;
-import link.webarata3.dro.housewifi.util.WiFiUtil;
+import link.webarata3.dro.housewifi.util.WifiUtil;
 
 public class MainWidget extends AppWidgetProvider {
     public static final String ACTION_ITEM_CLICK = "link.webarata3.dro.housewifi.ACTION_ITEM_CLICK";
@@ -95,7 +95,7 @@ public class MainWidget extends AppWidgetProvider {
             case ACTION_ITEM_CLICK:
                 Bundle bundle = Objects.requireNonNull(intent.getExtras());
                 String ssid = bundle.getString("ssid");
-                WiFiUtil.changeAccessPoint(context, ssid);
+                WifiUtil.changeAccessPoint(context, ssid);
                 break;
         }
     }

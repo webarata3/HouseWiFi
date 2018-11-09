@@ -14,9 +14,9 @@ import link.webarata3.dro.housewifi.activity.MainWidget;
 import link.webarata3.dro.housewifi.dao.SsidDao;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.AccessPoint;
-import link.webarata3.dro.housewifi.model.ConnectedWiFi;
+import link.webarata3.dro.housewifi.model.ConnectedWifi;
 import link.webarata3.dro.housewifi.model.Ssid;
-import link.webarata3.dro.housewifi.util.WiFiUtil;
+import link.webarata3.dro.housewifi.util.WifiUtil;
 
 public class MainService extends RemoteViewsService {
     @Override
@@ -26,7 +26,7 @@ public class MainService extends RemoteViewsService {
 
     private class MainWidgetFactory implements RemoteViewsFactory {
         private List<Ssid> reservedSsidList;
-        private ConnectedWiFi connectedWiFi;
+        private ConnectedWifi connectedWifi;
         private Map<String, AccessPoint> ssidMap;
 
         @Override
@@ -54,8 +54,8 @@ public class MainService extends RemoteViewsService {
             remoteViews.setTextViewText(R.id.ssid, ssid);
             remoteViews.setTextViewText(R.id.quality, (ssidData == null ? 0 : ssidData.getQuality()) + "%");
 
-            if (connectedWiFi != null && ssid.equals(connectedWiFi.getSsid())) {
-                String other = getString(R.string.link_speed, connectedWiFi.getLinkSpeed());
+            if (connectedWifi != null && ssid.equals(connectedWifi.getSsid())) {
+                String other = getString(R.string.link_speed, connectedWifi.getLinkSpeed());
                 remoteViews.setTextViewText(R.id.linkSpeed, other);
 
                 remoteViews.setTextColor(R.id.ssid,
@@ -102,8 +102,8 @@ public class MainService extends RemoteViewsService {
         }
 
         private void fetchSsid() {
-            connectedWiFi = WiFiUtil.getConnectedWiFi(getApplicationContext());
-            ssidMap = WiFiUtil.getCurrentAccessPoint(getApplicationContext());
+            connectedWifi = WifiUtil.getConnectedWifi(getApplicationContext());
+            ssidMap = WifiUtil.getCurrentAccessPoint(getApplicationContext());
 
             reservedSsidList = new ArrayList<>();
             DatabaseHelper helper = new DatabaseHelper(getApplicationContext());

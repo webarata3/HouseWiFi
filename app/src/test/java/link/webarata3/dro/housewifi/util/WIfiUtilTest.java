@@ -10,14 +10,13 @@ import org.junit.runner.RunWith;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import link.webarata3.dro.housewifi.dao.SsidDao;
-import link.webarata3.dro.housewifi.model.ConnectedWiFi;
+import link.webarata3.dro.housewifi.model.ConnectedWifi;
 
 import static android.content.Context.WIFI_SERVICE;
 import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
-public class WIFiUtilTest {
+public class WIfiUtilTest {
     private Context context;
 
     @Before
@@ -26,7 +25,7 @@ public class WIFiUtilTest {
     }
 
     @Test
-    public void test_getConnectedWiFi() {
+    public void test_getConnectedWifi() {
         WifiManager spyWifiManager = (WifiManager) spy(context.getSystemService(WIFI_SERVICE));
         WifiInfo mockWifiInfo = spy(spyWifiManager.getConnectionInfo());
 
@@ -38,6 +37,6 @@ public class WIFiUtilTest {
         when(mockWifiInfo.getIpAddress()).thenReturn(ip);
         when(mockWifiInfo.getLinkSpeed()).thenReturn(866);
 
-        ConnectedWiFi connectedWifi = WiFiUtil.getConnectedWiFi(context);
+        ConnectedWifi connectedWifi = WifiUtil.getConnectedWifi(context);
     }
 }

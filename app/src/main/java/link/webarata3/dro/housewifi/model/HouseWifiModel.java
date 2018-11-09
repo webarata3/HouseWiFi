@@ -10,8 +10,8 @@ import link.webarata3.dro.housewifi.dao.SsidService;
 import link.webarata3.dro.housewifi.dao.impl.SettingServiceImpl;
 import link.webarata3.dro.housewifi.dao.impl.SsidServiceImpl;
 
-public class HouseWiFiModel {
-    private static HouseWiFiModel model;
+public class HouseWifiModel {
+    private static HouseWifiModel model;
 
     private List<HouseWifiObserver> houseWifiObserverList;
     private boolean acceptPermission;
@@ -19,20 +19,20 @@ public class HouseWiFiModel {
     private SettingService settingService;
     private SsidService ssidService;
 
-    private HouseWiFiModel(SettingService settingService, SsidService ssidService) {
+    private HouseWifiModel(SettingService settingService, SsidService ssidService) {
         houseWifiObserverList = new ArrayList<>();
         this.settingService = settingService;
         this.ssidService = ssidService;
     }
 
-    public static synchronized HouseWiFiModel getDefaultInstance(Context context) {
+    public static synchronized HouseWifiModel getDefaultInstance(Context context) {
         if (model != null) return model;
         return getInstance(new SettingServiceImpl(context), new SsidServiceImpl(context));
     }
 
-    public static synchronized HouseWiFiModel getInstance(SettingService settingService, SsidService ssidService) {
+    public static synchronized HouseWifiModel getInstance(SettingService settingService, SsidService ssidService) {
         if (model == null) {
-            model = new HouseWiFiModel(settingService, ssidService);
+            model = new HouseWifiModel(settingService, ssidService);
         }
 
         return model;

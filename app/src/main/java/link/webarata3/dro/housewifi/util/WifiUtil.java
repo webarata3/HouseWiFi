@@ -12,22 +12,22 @@ import java.util.Map;
 import java.util.Objects;
 
 import link.webarata3.dro.housewifi.model.AccessPoint;
-import link.webarata3.dro.housewifi.model.ConnectedWiFi;
+import link.webarata3.dro.housewifi.model.ConnectedWifi;
 
 import static android.content.Context.WIFI_SERVICE;
 
-public class WiFiUtil {
-    private WiFiUtil() {
+public class WifiUtil {
+    private WifiUtil() {
         // ignore
     }
 
-    public static ConnectedWiFi getConnectedWiFi(Context context) {
+    public static ConnectedWifi getConnectedWifi(Context context) {
         WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
         Objects.requireNonNull(wifiManager);
 
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 
-        return new ConnectedWiFi(wifiInfo.getSSID(), wifiInfo.getIpAddress(), wifiInfo.getLinkSpeed());
+        return new ConnectedWifi(wifiInfo.getSSID(), wifiInfo.getIpAddress(), wifiInfo.getLinkSpeed());
     }
 
     public static Map<String, AccessPoint> getCurrentAccessPoint(Context context) {
