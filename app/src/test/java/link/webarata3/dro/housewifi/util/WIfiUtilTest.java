@@ -5,6 +5,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,15 +24,21 @@ import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
 public class WIfiUtilTest {
+    private Context mockContext;
+    private Context mockApplicationContext;
+
+    @Before
+    public void setUp() {
+        mockContext = mock(Context.class);
+        mockApplicationContext = mock(Context.class);
+    }
+
     @Test
     public void test_getConnectedWifi() {
-        Context context = mock(Context.class);
-        Context applicationContext = mock(Context.class);
-
-        when(context.getApplicationContext()).thenReturn(applicationContext);
+        when(mockContext.getApplicationContext()).thenReturn(mockApplicationContext);
 
         WifiManager mockWifiManager = mock(WifiManager.class);
-        when(applicationContext.getSystemService(WIFI_SERVICE)).thenReturn(mockWifiManager);
+        when(mockApplicationContext.getSystemService(WIFI_SERVICE)).thenReturn(mockWifiManager);
 
         WifiInfo mockWifiInfo = mock(WifiInfo.class);
 
@@ -45,7 +52,7 @@ public class WIfiUtilTest {
 
         when(mockWifiManager.getConnectionInfo()).thenReturn(mockWifiInfo);
 
-        ConnectedWifi connectedWifi = WifiUtil.getConnectedWifi(context);
+        ConnectedWifi connectedWifi = WifiUtil.getConnectedWifi(mockContext);
         assertThat(connectedWifi.getSsid(), is("dummy_ssid"));
         assertThat(connectedWifi.getIpAddress(), is("192.168.123.45"));
         assertThat(connectedWifi.getLinkSpeed(), is(866));
@@ -53,13 +60,10 @@ public class WIfiUtilTest {
 
     @Test
     public void test_getCurrentAccessPoint() {
-        Context context = mock(Context.class);
-        Context applicationContext = mock(Context.class);
-
-        when(context.getApplicationContext()).thenReturn(applicationContext);
+        when(mockContext.getApplicationContext()).thenReturn(mockApplicationContext);
 
         WifiManager mockWifiManager = mock(WifiManager.class);
-        when(applicationContext.getSystemService(WIFI_SERVICE)).thenReturn(mockWifiManager);
+        when(mockApplicationContext.getSystemService(WIFI_SERVICE)).thenReturn(mockWifiManager);
 
         when(mockWifiManager.startScan()).thenReturn(true);
 
@@ -72,12 +76,12 @@ public class WIfiUtilTest {
 
         when(mockWifiManager.getScanResults()).thenReturn(mockList);
 
-        Map<String, AccessPoint> resultMap = WifiUtil.getCurrentAccessPoint(context);
+        Map<String, AccessPoint> resultMap = WifiUtil.getCurrentAccessPoint(mockContext);
 
         assertThat(resultMap.size(), is(1));
-        AccessPoint accessPoint = resultMap.get(0);
+        AccessPoint accessPoint = resultMap.get("dummy_ssid");
         assertThat(accessPoint, is(notNullValue()));
         assertThat(accessPoint.getSsid(), is("dummy_ssid"));
-        assertThat(accessPoint.getQuality(), is(-50));
+        assertThat(accessPoint.getQuality(), is(100));
     }
 }

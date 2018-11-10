@@ -40,8 +40,8 @@ public class WifiUtil {
         List<ScanResult> scanResults = wifiManager.getScanResults();
 
         for (ScanResult scanResult : scanResults) {
-            AccessPoint ssid = new AccessPoint(scanResult.SSID, scanResult.level);
-            ssidMap.put(ssid.getSsid(), ssid);
+            AccessPoint accessPoint = new AccessPoint(scanResult.SSID, scanResult.level);
+            ssidMap.put(accessPoint.getSsid(), accessPoint);
         }
 
         return ssidMap;
