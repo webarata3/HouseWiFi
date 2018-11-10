@@ -2,6 +2,7 @@ package link.webarata3.dro.housewifi.util;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -78,10 +79,37 @@ public class WIfiUtilTest {
 
         Map<String, AccessPoint> resultMap = WifiUtil.getCurrentAccessPoint(mockContext);
 
+        verify(mockWifiManager, times(1)).startScan();
+
         assertThat(resultMap.size(), is(1));
         AccessPoint accessPoint = resultMap.get("dummy_ssid");
         assertThat(accessPoint, is(notNullValue()));
         assertThat(accessPoint.getSsid(), is("dummy_ssid"));
         assertThat(accessPoint.getQuality(), is(100));
+    }
+
+    @Test
+    public void test_changeAccessPoint() {
+        when(mockContext.getApplicationContext()).thenReturn(mockApplicationContext);
+
+        WifiManager mockWifiManager = mock(WifiManager.class);
+        when(mockApplicationContext.getSystemService(WIFI_SERVICE)).thenReturn(mockWifiManager);
+
+        when(mockWifiManager.disconnect()).thenReturn(true);
+
+        WifiConfiguration mockWifiConfiguration = mock(WifiConfiguration.class);
+        mockWifiConfiguration.SSID = "\"dummy_ssid\"";
+        mockWifiConfiguration.networkId = 1;
+        List<WifiConfiguration> mockList = new ArrayList<>();
+        mockList.add(mockWifiConfiguration);
+
+        when(mockWifiManager.getConfiguredNetworks()).thenReturn(mockList);
+
+        when(mockWifiManager.enableNetwork(1, true)).thenReturn(true);
+
+        WifiUtil.changeAccessPoint(mockContext, "dummy_ssid");
+
+        verify(mockWifiManager, times(1)).disconnect();
+        verify(mockWifiManager, times(1)).enableNetwork(1, true);
     }
 }
