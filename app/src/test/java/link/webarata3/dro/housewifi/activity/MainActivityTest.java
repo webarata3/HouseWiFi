@@ -1,14 +1,21 @@
 package link.webarata3.dro.housewifi.activity;
 
+import android.app.Instrumentation;
+import android.content.Context;
+import android.content.Intent;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import link.webarata3.dro.housewifi.R;
+import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 
 import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.action.ViewActions.*;
@@ -28,6 +35,18 @@ public class MainActivityTest {
         mainActivity = mainActivityRule.getActivity();
     }
 
+    @After
+    public void tearDwon() {
+        // DBのclose
+        Context context = ApplicationProvider.getApplicationContext();
+        (new DatabaseHelper(context) {
+            @Override
+            public void close() {
+                getReadableDatabase().close();
+            }
+        }).close();
+    }
+
     @Test
     public void test_clickFab() {
         onView(ViewMatchers.withId(R.id.addFab)).perform(click());
@@ -37,4 +56,12 @@ public class MainActivityTest {
                 hasComponent(hasClassName("link.webarata3.dro.housewifi.activity.RegisterActivity"))
         ));
     }
+
+//    @Test
+//    public void test_activityResult() {
+//        Instrumentation.ActivityResult result =
+//                new Instrumentation.ActivityResult(
+//                        MainActivity.REGISTER_SSID_CODE, new Intent(mainActivity, RegisterActivity.class));
+//        intending(toPackage("link.webarata3.dro.housewifi.activity")).respondWith(result);
+//    }
 }
