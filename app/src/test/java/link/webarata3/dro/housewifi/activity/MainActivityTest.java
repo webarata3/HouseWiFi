@@ -29,16 +29,17 @@ public class MainActivityTest {
     @Rule
     public IntentsTestRule<MainActivity> mainActivityRule = new IntentsTestRule<>(MainActivity.class);
     private MainActivity mainActivity;
+    private Context context;
 
     @Before
     public void setUp() {
         mainActivity = mainActivityRule.getActivity();
+        context = ApplicationProvider.getApplicationContext();
     }
 
     @After
     public void tearDwon() {
         // DBのclose
-        Context context = ApplicationProvider.getApplicationContext();
         (new DatabaseHelper(context) {
             @Override
             public void close() {
@@ -57,11 +58,11 @@ public class MainActivityTest {
         ));
     }
 
-//    @Test
-//    public void test_activityResult() {
-//        Instrumentation.ActivityResult result =
-//                new Instrumentation.ActivityResult(
-//                        MainActivity.REGISTER_SSID_CODE, new Intent(mainActivity, RegisterActivity.class));
-//        intending(toPackage("link.webarata3.dro.housewifi.activity")).respondWith(result);
-//    }
+    @Test
+    public void test_activityResult() {
+        Instrumentation.ActivityResult result =
+                new Instrumentation.ActivityResult(
+                        MainActivity.REGISTER_SSID_CODE, new Intent(mainActivity, RegisterActivity.class));
+        intending(toPackage("link.webarata3.dro.housewifi.activity")).respondWith(result);
+    }
 }
