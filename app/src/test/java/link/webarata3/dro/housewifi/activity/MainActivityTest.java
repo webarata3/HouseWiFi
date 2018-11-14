@@ -43,7 +43,7 @@ public class MainActivityTest {
         (new DatabaseHelper(context) {
             @Override
             public void close() {
-                getReadableDatabase().close();
+                getWritableDatabase().close();
             }
         }).close();
     }
