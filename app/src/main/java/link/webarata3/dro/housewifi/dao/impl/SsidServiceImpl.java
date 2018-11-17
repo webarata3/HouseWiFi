@@ -12,7 +12,7 @@ public class SsidServiceImpl implements SsidService {
     private DatabaseHelper helper;
 
     public SsidServiceImpl(Context context) {
-        helper = new DatabaseHelper(context);
+        helper = DatabaseHelper.getInstance(context);
     }
 
     protected SsidDao createSsidDao(SQLiteDatabase db) {

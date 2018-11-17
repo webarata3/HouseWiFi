@@ -106,7 +106,7 @@ public class MainService extends RemoteViewsService {
             ssidMap = WifiUtil.getCurrentAccessPoint(getApplicationContext());
 
             reservedSsidList = new ArrayList<>();
-            DatabaseHelper helper = new DatabaseHelper(getApplicationContext());
+            DatabaseHelper helper = DatabaseHelper.getInstance(getApplicationContext());
             SsidDao ssidDao = new SsidDao(helper.getReadableDatabase());
             reservedSsidList = ssidDao.selectAll();
         }

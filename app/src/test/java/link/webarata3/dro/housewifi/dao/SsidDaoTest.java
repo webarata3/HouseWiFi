@@ -22,7 +22,7 @@ public class SsidDaoTest {
 
     @Before
     public void setUp() {
-        dbHelper = new DatabaseHelper(ApplicationProvider.getApplicationContext());
+        dbHelper = DatabaseHelper.getInstance(ApplicationProvider.getApplicationContext());
     }
 
     @After

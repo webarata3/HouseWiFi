@@ -39,13 +39,7 @@ public class MainActivityTest {
 
     @After
     public void tearDwon() {
-        // DBのclose
-        (new DatabaseHelper(context) {
-            @Override
-            public void close() {
-                getWritableDatabase().close();
-            }
-        }).close();
+        DatabaseHelper.getInstance(context).close();
     }
 
     @Test
