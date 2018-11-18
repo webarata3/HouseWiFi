@@ -35,6 +35,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(ddl);
     }
 
+    public void clear() {
+        executeInTransaction(db -> {
+            db.execSQL("DELETE FROM ssid");
+        });
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }

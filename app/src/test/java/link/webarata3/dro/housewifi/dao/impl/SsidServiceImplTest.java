@@ -2,6 +2,7 @@ package link.webarata3.dro.housewifi.dao.impl;
 
 import android.content.Context;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import link.webarata3.dro.housewifi.dao.SsidDao;
 import link.webarata3.dro.housewifi.dao.SsidService;
+import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.Ssid;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -30,6 +32,11 @@ public class SsidServiceImplTest {
     @Before
     public void setUp() {
         context = ApplicationProvider.getApplicationContext();
+    }
+
+    @After
+    public void tearDwon() {
+        DatabaseHelper.getInstance(context).close();
     }
 
     @Test

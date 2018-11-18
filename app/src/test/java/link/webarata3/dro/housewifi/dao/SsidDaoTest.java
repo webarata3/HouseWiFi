@@ -12,9 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import link.webarata3.dro.housewifi.helper.DatabaseHelper;
 import link.webarata3.dro.housewifi.model.Ssid;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SsidDaoTest {
@@ -23,6 +22,8 @@ public class SsidDaoTest {
     @Before
     public void setUp() {
         dbHelper = DatabaseHelper.getInstance(ApplicationProvider.getApplicationContext());
+
+        dbHelper.clear();
     }
 
     @After
