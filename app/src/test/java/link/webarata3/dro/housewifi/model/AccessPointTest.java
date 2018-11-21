@@ -3,6 +3,7 @@ package link.webarata3.dro.housewifi.model;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
+
 public class AccessPointTest {
     @Test
     public void test_level0() {
