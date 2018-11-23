@@ -45,7 +45,6 @@ public class MainActivityTest {
     @Test
     public void test_clickFab() {
         onView(ViewMatchers.withId(R.id.addFab)).perform(click());
-
         intended(allOf(
                 hasComponent(hasMyPackageName()),
                 hasComponent(hasClassName("link.webarata3.dro.housewifi.activity.RegisterActivity"))
