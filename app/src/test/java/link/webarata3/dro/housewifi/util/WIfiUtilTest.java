@@ -50,7 +50,6 @@ public class WIfiUtilTest {
         ip = ip + 192;
         when(mockWifiInfo.getIpAddress()).thenReturn(ip);
         when(mockWifiInfo.getLinkSpeed()).thenReturn(866);
-
         when(mockWifiManager.getConnectionInfo()).thenReturn(mockWifiInfo);
 
         ConnectedWifi connectedWifi = WifiUtil.getConnectedWifi(mockContext);
