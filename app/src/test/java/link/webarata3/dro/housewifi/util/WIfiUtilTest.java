@@ -103,7 +103,6 @@ public class WIfiUtilTest {
         mockList.add(mockWifiConfiguration);
 
         when(mockWifiManager.getConfiguredNetworks()).thenReturn(mockList);
-
         when(mockWifiManager.enableNetwork(1, true)).thenReturn(true);
 
         WifiUtil.changeAccessPoint(mockContext, "dummy_ssid");
